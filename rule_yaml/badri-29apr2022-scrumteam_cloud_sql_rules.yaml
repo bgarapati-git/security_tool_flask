@@ -1,0 +1,5 @@
+rules:
+  - name: To check public ip in cloud sql
+    rule_id: 'SML_SQL_01'
+    priority: 'HIGH'
+    public_ip: '0.0.0.0/0'

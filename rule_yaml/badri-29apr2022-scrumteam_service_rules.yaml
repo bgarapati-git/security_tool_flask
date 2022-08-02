@@ -1,0 +1,41 @@
+---
+bindings:
+- members:
+  - serviceAccount:48487021260-compute@developer.gserviceaccount.com
+  role: roles/editor
+- members:
+  - serviceAccount:48487021260@cloudbuild.gserviceaccount.com
+  - user:giridharn@gnimmagadda.com
+  role: roles/owner
+- members:
+  - serviceAccount:48487021260@cloudbuild.gserviceaccount.com
+  - user:badari.garapathi@mail.com
+  role: roles/viewer
+etag: BwXjxDA-qBg=
+version: 1
+
+rule-2:
+- disabled: false
+  displayName: Compute Engine default service account
+  email: "*-compute@developer.gserviceaccount.com"
+  etag: MDEwMjE5MjA=
+  name: projects/giridhargcp/serviceAccounts/48487021260-compute@developer.gserviceaccount.com
+  oauth2ClientId: '110392455098669732434'
+  projectId: giridhargcp
+  uniqueId: '110392455098669732434'
+- disabled: false
+  displayName: App Engine default service account
+  email: "*@appspot.gserviceaccount.com"
+  etag: MDEwMjE5MjA=
+  name: projects/badri-29apr2022-scrumteam/serviceAccounts/badri-29apr2022-scrumteam@appspot.gserviceaccount.com
+  oauth2ClientId: '111978745375013066045'
+  projectId: badri-29apr2022-scrumteam
+  uniqueId: '111978745375013066045'
+
+rule-3:
+- keyAlgorithm: KEY_ALG_RSA_2048
+  keyOrigin: GOOGLE_PROVIDED
+  keyType: USER_MANAGED
+  name: "*"
+  validAfterTime: '2022-07-22T00:00:00Z'
+  validBeforeTime: '9999-12-31T23:59:59Z'

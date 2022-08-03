@@ -2,12 +2,15 @@ import json
 import os
 
 from flask import Flask, send_from_directory, request
+from flask_cors import CORS, cross_origin
 
 from src.run_security_tool import run_security_tool
 
 app = Flask(__name__, static_folder='static')
+CORS(app, support_credentials=True)
 
 
+@cross_origin(supports_credentials=True)
 @app.route("/getFileList", methods=["GET"])
 def get_files_list():
     project_id = request.args.get('project_id')
@@ -21,13 +24,14 @@ def get_files_list():
             status=200,
             mimetype='application/json'
         )
+
     else:
         response = app.response_class(
             response="Error Occurred while creating reports ",
             status=404,
             mimetype='application/json'
         )
-
+    #response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 

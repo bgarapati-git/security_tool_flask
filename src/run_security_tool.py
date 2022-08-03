@@ -5,7 +5,7 @@ from src.service_acc_validation import check_rules_yaml_service_accounts
 from src.common_functions import get_list, get_yaml_entities_public, read_project_json, convert_to_html
 from src.gcr_validation import check_iam_policy_gcr
 from src.gcf_validation import check_iam_policy_gcf
-
+from src.app_engine_validation import get_app_urls, check_app_engine
 
 # def run_security_tool():
 #     method_name = run_security_tool.__name__
@@ -35,6 +35,7 @@ def run_security_tool(project_id, app_root_path):
         validate_service_accounts(project_id, app_root_path)
         validate_cloud_run(project_id, app_root_path)
         validate_cloud_function(project_id, app_root_path)
+        validate_app_engine(project_id)
         status = "Success"
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
@@ -94,6 +95,12 @@ def validate_cloud_function(project_id, app_root_path):
     status_list_gcf = check_iam_policy_gcf(function_list, entities)
     file = 'gcf_status_report.html'
     convert_to_html(status_list_gcf, file, app_root_path)
+
+def validate_app_engine(project_id):
+    urls=get_app_urls(project_id)
+    status_list_app=check_app_engine(urls)
+    file = 'app_engine_report.html'
+    convert_to_html(status_list_app,file)
 
 
 if __name__ == '__main__':

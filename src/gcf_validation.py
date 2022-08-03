@@ -8,11 +8,11 @@ from src.common_functions import get_list
 
 def get_function_status(function_iam_policy, yaml_entities):
     method_name = get_function_status.__name__
+    list_ = []
     if len(yaml_entities) == 0:
         return
     try:
         iam_dict = json.loads(function_iam_policy)
-        list_ = []
         if "bindings" in iam_dict:
             list_ = [function_iam['members'] for function_iam in iam_dict['bindings']
                      if any(elem in function_iam['members'] for elem in yaml_entities)]
@@ -24,10 +24,12 @@ def get_function_status(function_iam_policy, yaml_entities):
 def check_iam_policy_gcf(func_list, yaml_entities):
     method_name = check_iam_policy_gcf.__name__
     status_list = []
+    print(f'function ist is {func_list}')
     try:
         for function in func_list:
             command = 'gcloud functions get-iam-policy --region=us-central1 --format=json' + ' ' + function
             function_iam_policy = get_iam_policy(function, command)
+            print(f'function iam policy is {function_iam_policy}')
             status = get_function_status(function_iam_policy, yaml_entities)
             status_list.append(
                 {service_name: gcf, rule_id:gcf_rule, function_name: function, priority: high_priority,

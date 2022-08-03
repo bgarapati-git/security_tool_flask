@@ -78,7 +78,7 @@ def validate_service_accounts(project_id, app_root_path):
 
 def validate_cloud_run(project_id, app_root_path):
     file_name = app_root_path + '/rule_yaml/' + project_id + '_gcr_' + 'rules.yaml'
-    command_service = "gcloud run services list --format=" + 'value(name)'
+    command_service = "gcloud run services list --format=" + "'value(name)'"
     service_list = get_list(project_id, command_service)
     entities = get_yaml_entities_public(file_name)
     status_list_gcr = check_iam_policy_gcr(service_list, entities)
@@ -88,7 +88,7 @@ def validate_cloud_run(project_id, app_root_path):
 
 def validate_cloud_function(project_id, app_root_path):
     file_name = app_root_path + '/rule_yaml/' + project_id + '_func_' + 'rules.yaml'
-    command_function = "gcloud functions list --format=" + 'value(name)'
+    command_function = "gcloud functions list --format=" + "'value(name)'"
     function_list = get_list(project_id, command_function)
     entities = get_yaml_entities_public(file_name)
     status_list_gcf = check_iam_policy_gcf(function_list, entities)

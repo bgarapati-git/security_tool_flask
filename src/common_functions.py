@@ -38,6 +38,7 @@ def convert_to_html(status_list, file,app_root_path):
 
         # OUTPUT AN HTML FILE
         with open(app_root_path+"/reports/" + file, 'w') as f:
+            print(f'app_root_path is {app_root_path}')
             f.write(html_string.format(table=df.to_html(index=False, classes='mystyle')))
             f.close()
     except Exception as e:
@@ -82,7 +83,6 @@ def get_yaml_entities_public(file_name):
     # Open the file and load the file
     method_name = get_yaml_entities_public.__name__
     try:
-        print(f'filename is {file_name}')
         data = get_yaml_data(file_name)
         entities = [key['entity'] for key in data["rules"]]
     except Exception as e:
@@ -103,6 +103,8 @@ def get_list(project_id, command):
 
 def get_status(iam_policy, entities):
     method_name = get_status.__name__
+    print(f'iam_policy is {iam_policy} and entities is {entities}')
+    list_=[]
     if len(entities) == 0:
         return
     try:

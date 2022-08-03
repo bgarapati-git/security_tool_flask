@@ -49,17 +49,10 @@ def get_list_roles_users(project_id, dataset):
 
 def check_rules_yaml(project_id, dataset_list, filename):
     method = check_rules_yaml.__name__
+    status_list = []
     try:
         yaml_data = get_yaml(project_id, filename)
         print(f'yaml_data is {yaml_data}')
-
-        # status messages
-        # iam_message = 'iamMember is public'
-        # specialGroup = 'specialGroup is public'
-        # groupByEmail = 'groupByEmail contains google groups'
-        # userByEmail = 'userByEmail contains gmail'
-
-        status_list = []
         for dataset in dataset_list:
             roles = get_list_roles_users(project_id, dataset)
             print(f'roles is {roles}')

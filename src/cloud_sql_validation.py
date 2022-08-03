@@ -53,11 +53,11 @@ def get_yaml_data_sql(project_id,file_name):
 
 def check_public_ip(sql_list, project_id,file_name):
     method_name = check_public_ip.__name__
+    status_list = []
     try:
-        status_list = []
+        yaml_ = get_yaml_data_sql(project_id, file_name)
         for i in sql_list:
             public_ip = get_ip_config(i)
-            yaml_ = get_yaml_data_sql(project_id,file_name)
             status = fail_status if (yaml_ in public_ip) else pass_status
             status_dict = {service_name: cloud_sql, rule_id: cloud_sql_rule, sql_instance: i, status_const: status,
                            message: compliant if status == pass_status else cloud_sql_public}

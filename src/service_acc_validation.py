@@ -11,8 +11,10 @@ from constants import service_name, iam_role, rule_id, project_svc, svc_acnt, st
 
 def get_service_acc_list(project_id):
     method = get_service_acc_list.__name__
+    new = []
     try:
         acc_data = (subprocess.getoutput('gcloud iam service-accounts list --project ' + project_id + ' --format=json'))
+        print(f'service account list is {acc_data}')
         jsn_ = json.loads(acc_data)
         new = [j['email'] for j in jsn_]
     except Exception as e:
@@ -20,10 +22,10 @@ def get_service_acc_list(project_id):
     return new
 
 
-def get_yaml_details(project_id,filename):
+def get_yaml_details(project_id, filename):
     method = get_yaml_details.__name__
     try:
-        #filename = '../rule_yaml/' + project_id + '_service_' + 'rules.yaml'
+        # filename = '../rule_yaml/' + project_id + '_service_' + 'rules.yaml'
         with open(filename) as f:
             data = yaml.load(f, Loader=SafeLoader)
             yaml_ = [i['role'] for i in data['bindings']]
@@ -47,11 +49,11 @@ def get_ser_acc_keytypes(ser_acc):
     return key_data
 
 
-def check_rules_yaml_service_accounts(projectId,filename):
+def check_rules_yaml_service_accounts(projectId, filename):
     email_data = get_service_acc_list(projectId)
     print(f'acc_data is {email_data}')
     failed_service_accounts = []
-    yaml_ = get_yaml_details(projectId,filename)
+    yaml_ = get_yaml_details(projectId, filename)
 
     # checking Rule1
     acc_data = (subprocess.getoutput('gcloud projects get-iam-policy ' + projectId + ' --format=json'))
@@ -85,7 +87,8 @@ def check_rules_yaml_service_accounts(projectId,filename):
             status_list.append(status_dict)
             failed_service_accounts.append(i)
 
-    pass_list = [{service_name: iam_role, rule_id: svc_acnt_rule_4, project_svc: projectId, svc_acnt: i, status_const: pass_status,
+    pass_list = [{service_name: iam_role, rule_id: svc_acnt_rule_4, project_svc: projectId, svc_acnt: i,
+                  status_const: pass_status,
                   message: compliant} for i in email_data if i not in failed_service_accounts]
 
     return status_list + pass_list

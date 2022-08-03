@@ -6,6 +6,7 @@ from yaml.loader import SafeLoader
 def get_yaml_entities(project_id):
     # Open the file and load the file
     method_name = get_yaml_entities.__name__
+    entities=[]
     try:
         file_name = '../rule_yaml/' + project_id + '_gcs_'+'rules.yaml'
         print(f'filename is {file_name}')

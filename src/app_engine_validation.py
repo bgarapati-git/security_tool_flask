@@ -1,5 +1,7 @@
 import requests
 import subprocess
+from constants import service_name,message,rule_id,priority,status_const,app_engine,ae_rule,url,url_response,compliant,high_priority, \
+    pass_status,fail_status
 
 def get_app_urls(project_id):
     list_= subprocess.getoutput('gcloud app services list --project='+project_id)
@@ -13,19 +15,19 @@ def get_app_urls(project_id):
         urls.append(url)
     return urls
 
-def check_app_engine(url):
+def check_app_engine(urls):
     status_list=[]
-    for i in url:
+    for i in urls:
         request=requests.get(i)
         #print(request)
         resp=request.history
         #print(resp)
         if  '<Response [302]>' in str(resp) or '<Response [301]>' in str(resp) :
-            status_list.append({"Service": "APP ENGINE", "Rule_ID": "SML-DE-4", "URL": i, "Priority": "Important",
-                     "Status": "Pass", "Message": "Security Compliant, URL redirected "})
+            status_list.append({service_name: app_engine, rule_id: ae_rule, url: i, priority: high_priority,
+                                status_const:pass_status, message:compliant})
         else:
-            status_list.append({"Service": "APP ENGINE", "Rule_ID": "SML-DE-4", "URL": i, "Priority": "Important",
-                     "Status": "Fail", "Message": "URL is not redirected"})
+            status_list.append({service_name: app_engine, rule_id: ae_rule, url: i, priority: high_priority,
+                                status_const:fail_status, message:url_response})
     print(status_list)
     return status_list
 

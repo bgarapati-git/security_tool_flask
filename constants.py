@@ -20,6 +20,7 @@ svc_acnt="Service Account"
 role_svc="Service Account has roles/editor or roles/owner privilege"
 default_svc="Default Service Account is used"
 function_name="Function Name"
+url="URL"
 
 #Services
 gcs="Cloud Storage"
@@ -27,7 +28,7 @@ gcr="Cloud Run"
 big_query='BigQuery'
 cloud_sql="Cloud SQL"
 gcf="Cloud Function"
-
+app_engine= "App Engine"
 
 #Rule Ids
 
@@ -43,7 +44,7 @@ svc_acnt_rule_2='SML_SVC_02'
 svc_acnt_rule_3='SML_SVC_03'
 svc_acnt_rule_4='SML_SVC_04'
 gcf_rule="SML-GCF-1"
-
+ae_rule="SML_AE_1"
 
 
 #Messages
@@ -55,3 +56,4 @@ iam_message = 'iamMember is public'
 specialGroup = 'specialGroup is public'
 groupByEmail = 'groupByEmail contains google groups'
 userByEmail = 'userByEmail contains gmail'
+url_response= "Url is not redirected"

@@ -35,7 +35,7 @@ def run_security_tool(project_id, app_root_path):
         validate_service_accounts(project_id, app_root_path)
         validate_cloud_run(project_id, app_root_path)
         validate_cloud_function(project_id, app_root_path)
-        validate_app_engine(project_id)
+        validate_app_engine(project_id,app_root_path)
         status = "Success"
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
@@ -96,11 +96,11 @@ def validate_cloud_function(project_id, app_root_path):
     file = 'gcf_status_report.html'
     convert_to_html(status_list_gcf, file, app_root_path)
 
-def validate_app_engine(project_id):
+def validate_app_engine(project_id,app_root_path):
     urls=get_app_urls(project_id)
     status_list_app=check_app_engine(urls)
     file = 'app_engine_report.html'
-    convert_to_html(status_list_app,file)
+    convert_to_html(status_list_app,file,app_root_path)
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ from yaml.loader import SafeLoader
 
 from constants import service_name, iam_role, rule_id, project_svc, svc_acnt, status_const, fail_status, \
     role_svc, message, svc_acnt_rule_1, svc_acnt_rule_2, default_svc, svc_acnt_rule_3, svc_acnt_rule_4, pass_status, \
-    compliant
+    compliant, user_managed
 
 
 def get_service_acc_list(project_id):
@@ -80,10 +80,10 @@ def check_rules_yaml_service_accounts(projectId, filename):
     for i in email_data:
         key_types = get_ser_acc_keytypes(i)
         if set(yaml_[5:]) & set(key_types):
-            message_key = f'{str(set(yaml_[5:]) & set(key_types))} key type is found'
+            #message_key = f'{str(set(yaml_[5:]) & set(key_types))} key type is found'
             status_dict = {service_name: iam_role, rule_id: svc_acnt_rule_3, project_svc: projectId, svc_acnt: i,
                            status_const: fail_status,
-                           message: message_key}
+                           message: user_managed}
             status_list.append(status_dict)
             failed_service_accounts.append(i)
 

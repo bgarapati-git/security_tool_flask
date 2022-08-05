@@ -6,7 +6,7 @@ from yaml import SafeLoader
 
 from constants import iam_message, specialGroup, groupByEmail, userByEmail, big_query, service_name, rule_id, \
     data_set_name, status_const, pass_status, fail_status, message, compliant, bq_rule_1, bq_rule_2, bq_rule_3, \
-    bq_rule_4
+    bq_rule_4, bq_rule_0
 
 
 def get_bq_dataset_list(project_id):
@@ -50,36 +50,64 @@ def get_list_roles_users(project_id, dataset):
 def check_rules_yaml(project_id, dataset_list, filename):
     method = check_rules_yaml.__name__
     status_list = []
+
     try:
         yaml_data = get_yaml(project_id, filename)
+        gmail = yaml_data['userByEmail'].split('*')[1]
+        google_groups = yaml_data['groupByEmail'].split('*')[1]
         print(f'yaml_data is {yaml_data}')
         for dataset in dataset_list:
+            failed_list = []
             roles = get_list_roles_users(project_id, dataset)
             print(f'roles is {roles}')
             json_ = json.loads(roles)
             dict_list = json_['access']
-            status = {service_name: big_query, rule_id: bq_rule_1, data_set_name: dataset, status_const: pass_status,
-                      message: compliant}
+            status_pass = {service_name: big_query, rule_id: bq_rule_0, data_set_name: dataset,
+                           status_const: pass_status,
+                           message: compliant}
+            # for i in dict_list:
+            #     if 'iamMember' in i.keys() and i['iamMember'] == yaml_data['iamMember']:
+            #         status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
+            #                   status_const: fail_status, message: iam_message}
+            #         break
+            #     elif 'specialGroup' in i.keys() and i['specialGroup'] == yaml_data['specialGroup']:
+            #         status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
+            #                   status_const: fail_status, message: specialGroup}
+            #         break
+            #     elif 'groupByEmail' in i.keys() and i['groupByEmail'] == yaml_data['groupByEmail']:
+            #         status = {service_name: big_query, rule_id: bq_rule_3, data_set_name: dataset,
+            #                   status_const: fail_status, message: groupByEmail}
+            #         break
+            #     elif 'userByEmail' in i.keys() and i['userByEmail'] == yaml_data['userByEmail']:
+            #         status = {service_name: big_query, rule_id: bq_rule_4, data_set_name: dataset,
+            #                   status_const: fail_status, message: userByEmail}
+            #         break
             for i in dict_list:
+                if 'specialGroup' in i.keys() and i['specialGroup'] == yaml_data['specialGroup']:
+                    status = {service_name: big_query, rule_id: bq_rule_1, data_set_name: dataset,
+                              status_const: fail_status, message: specialGroup}
+                    failed_list.append(status)
+
                 if 'iamMember' in i.keys() and i['iamMember'] == yaml_data['iamMember']:
                     status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
                               status_const: fail_status, message: iam_message}
-                    break
-                elif 'specialGroup' in i.keys() and i['specialGroup'] == yaml_data['specialGroup']:
-                    status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
-                              status_const: fail_status, message: specialGroup}
-                    break
-                elif 'groupByEmail' in i.keys() and i['groupByEmail'] == yaml_data['groupByEmail']:
+                    failed_list.append(status)
+
+
+
+                if 'groupByEmail' in i.keys() and google_groups in i['groupByEmail']:
                     status = {service_name: big_query, rule_id: bq_rule_3, data_set_name: dataset,
                               status_const: fail_status, message: groupByEmail}
-                    break
-                elif 'userByEmail' in i.keys() and i['userByEmail'] == yaml_data['userByEmail']:
+                    failed_list.append(status)
+
+                if 'userByEmail' in i.keys() and gmail in i['userByEmail']:
                     status = {service_name: big_query, rule_id: bq_rule_4, data_set_name: dataset,
                               status_const: fail_status, message: userByEmail}
-                    break
+                    failed_list.append(status)
 
-            print(f'status is {status}')
-            status_list.append(status)
+            status_list.extend(failed_list) if len(failed_list) > 0 else status_list.append(status_pass)
+            # print(f'status is {status}')
+            # status_list.append(status)
     except Exception as e:
         print(f'Exception occurred in {method} method exception is {e}')
     return status_list

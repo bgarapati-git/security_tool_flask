@@ -38,6 +38,7 @@ bq_rule_1='SML_BQ_01'
 bq_rule_2='SML_BQ_02'
 bq_rule_3='SML_BQ_03'
 bq_rule_4='SML_BQ_04'
+bq_rule_0='SML_BQ_00'
 cloud_sql_rule='SML_SQL_01'
 svc_acnt_rule_1='SML_SVC_01'
 svc_acnt_rule_2='SML_SVC_02'
@@ -49,6 +50,7 @@ ae_rule="SML_AE_1"
 
 #Messages
 
+public_entity="Publicly Accessible"
 compliant="Security Compliant"
 public_bucket="Public Bucket"
 
@@ -57,3 +59,4 @@ specialGroup = 'specialGroup is public'
 groupByEmail = 'groupByEmail contains google groups'
 userByEmail = 'userByEmail contains gmail'
 url_response= "Url is not redirected"
+user_managed="User Managed Key is found"

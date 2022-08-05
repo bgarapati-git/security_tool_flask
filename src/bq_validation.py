@@ -65,23 +65,6 @@ def check_rules_yaml(project_id, dataset_list, filename):
             status_pass = {service_name: big_query, rule_id: bq_rule_0, data_set_name: dataset,
                            status_const: pass_status,
                            message: compliant}
-            # for i in dict_list:
-            #     if 'iamMember' in i.keys() and i['iamMember'] == yaml_data['iamMember']:
-            #         status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
-            #                   status_const: fail_status, message: iam_message}
-            #         break
-            #     elif 'specialGroup' in i.keys() and i['specialGroup'] == yaml_data['specialGroup']:
-            #         status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
-            #                   status_const: fail_status, message: specialGroup}
-            #         break
-            #     elif 'groupByEmail' in i.keys() and i['groupByEmail'] == yaml_data['groupByEmail']:
-            #         status = {service_name: big_query, rule_id: bq_rule_3, data_set_name: dataset,
-            #                   status_const: fail_status, message: groupByEmail}
-            #         break
-            #     elif 'userByEmail' in i.keys() and i['userByEmail'] == yaml_data['userByEmail']:
-            #         status = {service_name: big_query, rule_id: bq_rule_4, data_set_name: dataset,
-            #                   status_const: fail_status, message: userByEmail}
-            #         break
             for i in dict_list:
                 if 'specialGroup' in i.keys() and i['specialGroup'] == yaml_data['specialGroup']:
                     status = {service_name: big_query, rule_id: bq_rule_1, data_set_name: dataset,
@@ -92,8 +75,6 @@ def check_rules_yaml(project_id, dataset_list, filename):
                     status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
                               status_const: fail_status, message: iam_message}
                     failed_list.append(status)
-
-
 
                 if 'groupByEmail' in i.keys() and google_groups in i['groupByEmail']:
                     status = {service_name: big_query, rule_id: bq_rule_3, data_set_name: dataset,

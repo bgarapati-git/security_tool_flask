@@ -38,7 +38,8 @@ def get_files_list():
 def get_report_file():
     file_name = request.args.get('file')
     print(f'filename is {file_name}')
-    path=os.path.join(app.root_path,"reports")+"\\"+file_name
+    #path=os.path.join(app.root_path,"reports")+"\\"+file_name
+    path = os.path.join(app.root_path, "reports", file_name)
     return send_file(path)
     #return send_from_directory(directory='reports', path="reports", filename=file_name)
 

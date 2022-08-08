@@ -7,8 +7,8 @@ from constants import service_name,message,rule_id,priority,status_const,app_eng
 
 def get_app_urls(project_id):
     list_= subprocess.getoutput('gcloud app services list --project='+project_id)
-    services=(list_.split("\n")[::3])
-    #services = [i.split(' ')[0] for i in list_.split("\n")][1:] if len(list_)>0 else []
+    #services=(list_.split("\n")[::3])
+    services = [i.split(' ')[0] for i in list_.split("\n")][1:] if len(list_)>0 else []
     print (f' app services {services}')
     urls=[]
     for i in services:

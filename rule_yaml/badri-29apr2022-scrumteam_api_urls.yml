@@ -1,0 +1,21 @@
+endpoints: 
+  app1: 
+    url: 
+      - "https://us-central1-badri-29apr2022-scrumteam.cloudfunctions.net/token-details"
+    payload:
+      -
+    header:
+      Authorization: 
+               - 'Bearer 111111111111111111111'
+      Content-Type: 
+               - 'application/json'
+  app2: 
+    url: 
+      - "https://us-central1-badri-29apr2022-scrumteam.cloudfunctions.net/hello_get"
+    payload:
+      -
+    header:
+      Authorization: 
+               - 'Bearer 111111111111111111111'
+      Content-Type: 
+               - 'application/json'

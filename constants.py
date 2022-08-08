@@ -29,6 +29,7 @@ big_query='BigQuery'
 cloud_sql="Cloud SQL"
 gcf="Cloud Function"
 app_engine= "App Engine"
+api_security= "API Security"
 
 #Rule Ids
 
@@ -46,6 +47,7 @@ svc_acnt_rule_3='SML_SVC_03'
 svc_acnt_rule_4='SML_SVC_04'
 gcf_rule="SML-GCF-1"
 ae_rule="SML_AE_1"
+api_rule="SML-SEC-1"
 
 
 #Messages

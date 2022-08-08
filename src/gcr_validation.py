@@ -1,3 +1,5 @@
+
+
 from constants import service_name, gcr, rule_id, gcr_rule, gcr_service_name, priority, high_priority, status_const, \
     message, public_entity, compliant, pass_status, public_bucket
 from src.common_functions import get_iam_policy, get_status, get_list, get_yaml_entities_public

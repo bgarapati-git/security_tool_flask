@@ -1,3 +1,5 @@
+
+
 from constants import service_name, rule_id, bucket_name, priority, status_const, message, public_bucket, \
     pass_status, high_priority, gcs, gcs_rule, compliant
 from src.common_functions import get_list, get_iam_policy, get_status, get_yaml_entities_public

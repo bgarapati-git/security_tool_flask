@@ -6,6 +6,7 @@ from src.common_functions import get_list, get_yaml_entities_public, read_projec
 from src.gcr_validation import check_iam_policy_gcr
 from src.gcf_validation import check_iam_policy_gcf
 from src.app_engine_validation import get_app_urls, check_app_engine
+from src.api_security_validation import get_urls, check_api
 
 # def run_security_tool():
 #     method_name = run_security_tool.__name__
@@ -45,6 +46,8 @@ def run_security_tool(project_id, app_root_path):
         count_dict.append(count_dict6)
         count_dict7=validate_app_engine(project_id,app_root_path)
         count_dict.append(count_dict7)
+        count_dict8=validate_api_security(project_id, app_root_path)
+        count_dict.append(count_dict8)
 
 
         status = "Success"
@@ -119,6 +122,15 @@ def validate_app_engine(project_id,app_root_path):
     file = 'app_engine_report.html'
     count_dict=convert_to_html(status_list_app,file,app_root_path)
     return count_dict
+
+def validate_api_security(project_id,app_root_path):
+    file_name = app_root_path + '/rule_yaml/' + project_id + '_api_' + 'urls.yml'
+    urls=(get_urls(file_name))
+    status_list_api=check_api(urls)
+    file ='api_security_report.html'
+    count_dict=convert_to_html(status_list_api,file,app_root_path)
+    return count_dict
+
 
 
 if __name__ == '__main__':

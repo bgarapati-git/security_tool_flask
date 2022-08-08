@@ -12,10 +12,9 @@ def get_app_urls(project_id):
     print (f' app services {services}')
     urls=[]
     for i in services:
-        i=i[9:]
+        #i=i[9:]
         url=subprocess.getoutput('gcloud app browse --service='+i + ' --no-launch-browser')
         url=url.replace("https","http")
-        #url='http'+url[5:]
         urls.append(url)
     return urls
 

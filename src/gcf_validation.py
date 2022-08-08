@@ -1,7 +1,7 @@
 import json
 
 from constants import service_name, gcf, rule_id, gcf_rule, function_name, high_priority, priority, status_const, \
-    message, public_entity, compliant, pass_status, public_bucket
+    message, public_entity, compliant, pass_status, public_bucket, public_function
 from src.common_functions import get_iam_policy, get_status, get_yaml_entities_public
 
 from src.common_functions import get_list
@@ -34,7 +34,7 @@ def check_iam_policy_gcf(func_list, yaml_entities):
             status = get_function_status(function_iam_policy, yaml_entities)
             status_list.append(
                 {service_name: gcf, rule_id:gcf_rule, function_name: function, priority: high_priority,
-                 status_const: status,message:compliant if status == pass_status else public_bucket})
+                 status_const: status,message:compliant if status == pass_status else public_function})
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
     print(f'status_list is {status_list}')

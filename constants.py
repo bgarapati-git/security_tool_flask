@@ -53,6 +53,8 @@ ae_rule="SML_AE_1"
 public_entity="Publicly Accessible"
 compliant="Security Compliant"
 public_bucket="Public Bucket"
+public_function="Function is Public"
+public_run="Cloud Run is public"
 
 iam_message = 'iamMember is public'
 specialGroup = 'specialGroup is public'

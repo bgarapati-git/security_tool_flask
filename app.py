@@ -1,13 +1,13 @@
 import json
 import os
 
-from flask import Flask, send_from_directory, request
+from flask import Flask, request, send_file
 from flask_cors import CORS, cross_origin
 
 from src.run_security_tool import run_security_tool
 
 app = Flask(__name__, static_folder='static')
-CORS(app, support_credentials=True)
+CORS(app, support_credentials=True, expose_headers=["Content-Disposition"])
 
 
 @cross_origin(supports_credentials=True)
@@ -38,7 +38,9 @@ def get_files_list():
 def get_report_file():
     file_name = request.args.get('file')
     print(f'filename is {file_name}')
-    return send_from_directory('reports', path="reports", filename=file_name)
+    path=os.path.join(app.root_path,"reports")+"\\"+file_name
+    return send_file(path)
+    #return send_from_directory(directory='reports', path="reports", filename=file_name)
 
 
 if __name__ == "__main__":

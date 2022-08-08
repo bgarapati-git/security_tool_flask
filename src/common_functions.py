@@ -31,7 +31,7 @@ def convert_to_html(status_list, file,app_root_path):
         pass_count=len(df_pass)
         # count_dict['fail_count']=fail_count
         # count_dict['pass_count'] = pass_count
-        count_dict={file:{"fail_count":fail_count ,"pass_count":pass_count}}
+        count_dict={"filename":file,"fail_count":fail_count ,"pass_count":pass_count}
         html_string = '''
         <html>
           <head><title>Report</title></head>

@@ -28,19 +28,32 @@ from src.app_engine_validation import get_app_urls, check_app_engine
 
 def run_security_tool(project_id, app_root_path):
     method_name = run_security_tool.__name__
+    count_dict=[]
+    status_dict={}
     try:
-        validate_gcs_buckets(project_id, app_root_path)
-        validate_bq(project_id, app_root_path)
-        validate_cloud_sql(project_id, app_root_path)
-        validate_service_accounts(project_id, app_root_path)
-        validate_cloud_run(project_id, app_root_path)
-        validate_cloud_function(project_id, app_root_path)
-        validate_app_engine(project_id,app_root_path)
+        count_dict1=validate_gcs_buckets(project_id, app_root_path)
+        count_dict.append(count_dict1)
+        count_dict2=validate_bq(project_id, app_root_path)
+        count_dict.append(count_dict2)
+        count_dict3=validate_cloud_sql(project_id, app_root_path)
+        count_dict.append(count_dict3)
+        count_dict4=validate_service_accounts(project_id, app_root_path)
+        count_dict.append(count_dict4)
+        count_dict5=validate_cloud_run(project_id, app_root_path)
+        count_dict.append(count_dict5)
+        count_dict6=validate_cloud_function(project_id, app_root_path)
+        count_dict.append(count_dict6)
+        count_dict7=validate_app_engine(project_id,app_root_path)
+        count_dict.append(count_dict7)
+
+
         status = "Success"
+        status_dict={"status":status,"report_list":count_dict}
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
         status = "Fail"
-    return status
+        status_dict = {"status": status, "report_list": count_dict}
+    return status_dict
 
 
 def validate_gcs_buckets(project_id, app_root_path):
@@ -51,30 +64,32 @@ def validate_gcs_buckets(project_id, app_root_path):
     yaml_entities = get_yaml_entities_public(file_name)
     status_list_gcs = check_iam_policy(bucket_list, yaml_entities)
     file = 'gcs_status_report.html'
-    convert_to_html(status_list_gcs, file, app_root_path)
-
+    count_dict=convert_to_html(status_list_gcs, file, app_root_path)
+    return count_dict
 
 def validate_bq(project_id, app_root_path):
     filename = app_root_path + '/rule_yaml/' + project_id + '_bq_' + 'rules.yaml'
     dataset_list = get_bq_dataset_list(project_id)
     status_list_bq = check_rules_yaml(project_id, dataset_list, filename)
     file = 'bq_status_report.html'
-    convert_to_html(status_list_bq, file, app_root_path)
-
+    count_dict=convert_to_html(status_list_bq, file, app_root_path)
+    return count_dict
 
 def validate_cloud_sql(project_id, app_root_path):
     file_name = app_root_path + '/rule_yaml/' + project_id + '_cloud_sql_' + 'rules.yaml'
     sql_list = get_cloud_sql_list(project_id)
     status_list_sql = check_public_ip(sql_list, project_id, file_name)
     file = 'sql_status_report.html'
-    convert_to_html(status_list_sql, file, app_root_path)
+    count_dict=convert_to_html(status_list_sql, file, app_root_path)
+    return count_dict
 
 
 def validate_service_accounts(project_id, app_root_path):
     filename = app_root_path + '/rule_yaml/' + project_id + '_service_' + 'rules.yaml'
     status_list_sa = check_rules_yaml_service_accounts(project_id, filename)
     file = 'service_account_status_report.html'
-    convert_to_html(status_list_sa, file, app_root_path)
+    count_dict=convert_to_html(status_list_sa, file, app_root_path)
+    return count_dict
 
 
 def validate_cloud_run(project_id, app_root_path):
@@ -84,7 +99,8 @@ def validate_cloud_run(project_id, app_root_path):
     entities = get_yaml_entities_public(file_name)
     status_list_gcr = check_iam_policy_gcr(service_list, entities)
     file = 'gcr_status_report.html'
-    convert_to_html(status_list_gcr, file, app_root_path)
+    count_dict=convert_to_html(status_list_gcr, file, app_root_path)
+    return count_dict
 
 
 def validate_cloud_function(project_id, app_root_path):
@@ -94,13 +110,15 @@ def validate_cloud_function(project_id, app_root_path):
     entities = get_yaml_entities_public(file_name)
     status_list_gcf = check_iam_policy_gcf(function_list, entities)
     file = 'gcf_status_report.html'
-    convert_to_html(status_list_gcf, file, app_root_path)
+    count_dict=convert_to_html(status_list_gcf, file, app_root_path)
+    return count_dict
 
 def validate_app_engine(project_id,app_root_path):
     urls=get_app_urls(project_id)
     status_list_app=check_app_engine(urls)
     file = 'app_engine_report.html'
-    convert_to_html(status_list_app,file,app_root_path)
+    count_dict=convert_to_html(status_list_app,file,app_root_path)
+    return count_dict
 
 
 if __name__ == '__main__':

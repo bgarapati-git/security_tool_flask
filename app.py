@@ -15,10 +15,10 @@ CORS(app, support_credentials=True)
 def get_files_list():
     project_id = request.args.get('project_id')
     # project_id='badri-29apr2022-scrumteam'
-    status = run_security_tool(project_id, app.root_path)
-    if status == "Success":
-        file_list = [file for file in os.listdir('reports')]
-        data = {'reports': file_list}
+    status_dict = run_security_tool(project_id, app.root_path)
+    if status_dict['status'] == "Success":
+        #file_list = [file for file in os.listdir('reports')]
+        data = {'reports': status_dict['report_list']}
         response = app.response_class(
             response=json.dumps(data),
             status=200,

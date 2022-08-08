@@ -22,8 +22,16 @@ def read_project_json():
 def convert_to_html(status_list, file,app_root_path):
     method_name = convert_to_html.__name__
     print(f'In method {method_name} status_list is {status_list}')
+    count_dict={}
     try:
         df = pd.DataFrame.from_records(status_list)
+        df_fail=df[df.Status=="Fail"]
+        fail_count=len(df_fail)
+        df_pass=df[df.Status=="Pass"]
+        pass_count=len(df_pass)
+        # count_dict['fail_count']=fail_count
+        # count_dict['pass_count'] = pass_count
+        count_dict={file:{"fail_count":fail_count ,"pass_count":pass_count}}
         html_string = '''
         <html>
           <head><title>Report</title></head>
@@ -43,6 +51,7 @@ def convert_to_html(status_list, file,app_root_path):
             f.close()
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
+    return count_dict
 
 
 def execute_command(command):

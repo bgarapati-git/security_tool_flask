@@ -1,3 +1,5 @@
+
+
 import json
 
 from constants import service_name, gcf, rule_id, gcf_rule, function_name, high_priority, priority, status_const, \

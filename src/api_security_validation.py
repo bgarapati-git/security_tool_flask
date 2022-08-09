@@ -2,8 +2,9 @@
 
 import requests
 import json
-from constants import service_name,message,rule_id,priority,status_const,api_security,api_rule,url,compliant,high_priority, \
-    pass_status,fail_status
+from constants import service_name, message, rule_id, priority, status_const, api_security, api_rule, url, compliant, \
+    high_priority, \
+    pass_status, fail_status, api_unsecured
 
 import yaml 
 def get_urls(filename):
@@ -42,7 +43,7 @@ def check_api(urls):
         value=200
         if value in status:
            status_list.append({service_name: api_security, rule_id: api_rule, url: i, priority: high_priority,
-                                status_const:fail_status, message:compliant})
+                                status_const:fail_status, message:api_unsecured})
         else:
            status_list.append({service_name: api_security, rule_id: api_rule, url: i, priority: high_priority,
                                 status_const:pass_status, message:compliant})

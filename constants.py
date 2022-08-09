@@ -64,3 +64,4 @@ groupByEmail = 'groupByEmail contains google groups'
 userByEmail = 'userByEmail contains gmail'
 url_response= "Url is not redirected"
 user_managed="User Managed Key is found"
+api_unsecured="API is unsecured"

@@ -13,8 +13,9 @@ from constants import pass_status, fail_status, service_name, cloud_sql, rule_id
 def get_cloud_sql_list(project_id):
     method_name = get_cloud_sql_list.__name__
     try:
-        list_ = subprocess.getoutput('gcloud sql instances list --format="(NAME)" --project' + ' ' + project_id)
-        sql_list = list_.split("\n")[1:]
+        list_ = subprocess.getoutput('gcloud sql instances list --format=json --project' + ' ' + project_id)
+        json_list = json.loads(list_)
+        sql_list = [i['name'] for i in json_list]
         print(f'sql_list {sql_list}')
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')

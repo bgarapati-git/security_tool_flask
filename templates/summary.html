@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="../static/css/styles.css"/>
+<script type="text/javascript" src="../static/css/script.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <script type="text/javascript">
+        function openReport(filename) {
+          window.open("/getReport?file="+filename,'_blank');
+        }
+    </script>
+</head>
+<body>
+    <h1>{{ table_title }}</h1>
+    <table border="1" class="dataframe mystyle">
+    <thead>
+        <tr style="text-align: right;" >
+            {% for col in col_names %}
+            <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in report_list %}
+        <tr >
+            {% for key in keys %}
+            <td>{{ record[key] }}</td>
+            {% endfor %}
+            <td>
+                <button onclick="openReport('{{ record['filename'] }}')" id="b4"> View </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

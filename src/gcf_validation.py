@@ -1,4 +1,3 @@
-
 import json
 import subprocess
 
@@ -15,6 +14,7 @@ def get_function_name_list():
     function_names = [i['name'].split('/')[-1] for i in json_list]
     print(f'cloud function name list is {function_names}')
     return function_names
+
 
 def get_function_status(function_iam_policy, yaml_entities):
     method_name = get_function_status.__name__
@@ -37,13 +37,13 @@ def check_iam_policy_gcf(func_list, yaml_entities):
     print(f'function ist is {func_list}')
     try:
         for function in func_list:
-            command = 'gcloud functions get-iam-policy --region=us-central1 --format=json' + ' ' + function
+            command = 'gcloud functions get-iam-policy --format=json' + ' ' + function
             function_iam_policy = get_iam_policy(function, command)
             print(f'function iam policy is {function_iam_policy}')
             status = get_function_status(function_iam_policy, yaml_entities)
             status_list.append(
-                {service_name: gcf, rule_id :gcf_rule, function_name: function, priority: high_priority,
-                 status_const: status ,message :compliant if status == pass_status else public_function})
+                {service_name: gcf, rule_id: gcf_rule, function_name: function, priority: high_priority,
+                 status_const: status, message: compliant if status == pass_status else public_function})
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
     print(f'status_list is {status_list}')

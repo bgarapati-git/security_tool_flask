@@ -25,12 +25,12 @@ url="URL"
 #Services
 gcs="Cloud Storage"
 gcr="Cloud Run"
-big_query='BigQuery'
+big_query='Big Query'
 cloud_sql="Cloud SQL"
 gcf="Cloud Function"
 app_engine= "App Engine"
 api_security= "API Security"
-
+service_accounts="Service Accounts"
 #Rule Ids
 
 gcs_rule="SML-GCS-1"
@@ -62,6 +62,6 @@ iam_message = 'iamMember is public'
 specialGroup = 'specialGroup is public'
 groupByEmail = 'groupByEmail contains google groups'
 userByEmail = 'userByEmail contains gmail'
-url_response= "Url is not redirected"
+url_response= "URL doesn't redirect to https"
 user_managed="User Managed Key is found"
-api_unsecured="API is unsecured"
+api_unsecured="API allows Empty/Invalid Tokens"

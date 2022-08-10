@@ -9,6 +9,7 @@ from yaml import SafeLoader
 def read_project_json():
     method_name = read_project_json.__name__
     file_name = '../project_ids.json'
+    project_ids = []
     try:
         with open(file_name) as f:
             data = json.load(f)
@@ -19,19 +20,19 @@ def read_project_json():
     return project_ids
 
 
-def convert_to_html(status_list, file,app_root_path):
+def convert_to_html(status_list, file, app_root_path, service_name):
     method_name = convert_to_html.__name__
     print(f'In method {method_name} status_list is {status_list}')
-    count_dict={}
+    count_dict = {}
     try:
         df = pd.DataFrame.from_records(status_list)
-        df_fail=df[df.Status=="Fail"]
-        fail_count=len(df_fail)
-        df_pass=df[df.Status=="Pass"]
-        pass_count=len(df_pass)
-        # count_dict['fail_count']=fail_count
-        # count_dict['pass_count'] = pass_count
-        count_dict={"filename":file,"fail_count":fail_count ,"pass_count":pass_count}
+        df_fail = df[df.Status == "Fail"]
+        fail_count = len(df_fail)
+        df_pass = df[df.Status == "Pass"]
+        pass_count = len(df_pass)
+        count_dict = {"filename": file, "service": service_name, "fail_count": fail_count, "pass_count": pass_count}
+        df = df.sort_values(by='Status')
+
         html_string = '''
         <html>
           <head><title>Report</title></head>
@@ -45,7 +46,7 @@ def convert_to_html(status_list, file,app_root_path):
         '''
 
         # OUTPUT AN HTML FILE
-        with open(app_root_path+"/reports/" + file, 'w') as f:
+        with open(app_root_path + "/reports/" + file, 'w') as f:
             print(f'app_root_path is {app_root_path}')
             f.write(html_string.format(table=df.to_html(index=False, classes='mystyle')))
             f.close()
@@ -102,6 +103,7 @@ def get_yaml_entities_public(file_name):
 def get_list(project_id, command):
     # List buckets in a project 'gsutil ls -p PROJECT_ID'
     method_name = get_list.__name__
+    service_list = []
     try:
         services = subprocess.getoutput(command)
         service_list = services.split('\n')
@@ -113,7 +115,7 @@ def get_list(project_id, command):
 def get_status(iam_policy, entities):
     method_name = get_status.__name__
     print(f'iam_policy is {iam_policy} and entities is {entities}')
-    list_=[]
+    list_ = []
     if len(entities) == 0:
         return
     try:

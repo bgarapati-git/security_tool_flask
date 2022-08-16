@@ -32,7 +32,8 @@ cloud_sql="Cloud SQL"
 gcf="Cloud Function"
 app_engine= "App Engine"
 api_security= "API Security"
-
+service_accounts="Service Accounts"
+bq_pii ='BQ PII Validation'
 #Rule Ids
 
 gcs_rule="SML-GCS-1"
@@ -58,12 +59,15 @@ api_rule="SML-SEC-1"
 public_entity="Publicly Accessible"
 compliant="Security Compliant"
 public_bucket="Public Bucket"
+public_function="Function is Public"
+public_run="Cloud Run is public"
 
 iam_message = 'iamMember is public'
 specialGroup = 'specialGroup is public'
 groupByEmail = 'groupByEmail contains google groups'
 userByEmail = 'userByEmail contains gmail'
-url_response= "Url is not redirected"
+url_response= "URL doesn't redirect to https"
 user_managed="User Managed Key is found"
+api_unsecured="API allows Empty/Invalid Tokens"
 Failed_due_to_exposed="Failed due to exposed entities: "
 PII_not_exposed="PII data is not exposed"

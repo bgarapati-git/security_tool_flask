@@ -1,4 +1,4 @@
-from constants import gcs, big_query, cloud_sql, service_accounts, gcr, gcf, app_engine, api_security
+from constants import gcs, big_query, cloud_sql, gcr, gcf, app_engine, api_security, service_accounts, bq_pii
 from src.api_security_validation import get_urls, check_api
 from src.app_engine_validation import get_app_urls, check_app_engine
 from src.bq_validation import get_bq_dataset_list, check_rules_yaml
@@ -64,11 +64,13 @@ def validate_bq(project_id, app_root_path):
     return count_dict
 
 def validate_bq_PII(project_id, app_root_path):
-    file_name = '../rule_yaml/' + '_bq_PII_' + 'rule.yaml'
+    service_name = bq_pii
+    #file_name = '../rule_yaml/' + 'bq_PII_rule.yaml'
+    file_name = app_root_path + '/rule_yaml/' + 'bq_PII_rule.yaml'
     dataset, table, entity_list, regex_list=get_yaml(file_name)
     status_list_bq_PII = bq_PII_data_validation(project_id, dataset, table,entity_list,regex_list)
     file = 'bq_PII_status_report.html'
-    count_dict=convert_to_html(status_list_bq_PII, file, app_root_path)
+    count_dict=convert_to_html(status_list_bq_PII, file, app_root_path,service_name)
 
 
 def validate_cloud_sql(project_id, app_root_path):

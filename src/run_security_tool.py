@@ -18,18 +18,20 @@ def run_security_tool(project_id, app_root_path):
         count_dict.append(count_dict1)
         count_dict2 = validate_bq(project_id, app_root_path)
         count_dict.append(count_dict2)
-        count_dict3 = validate_cloud_sql(project_id, app_root_path)
+        count_dict3=validate_bq_PII(project_id, app_root_path)
         count_dict.append(count_dict3)
-        count_dict4 = validate_service_accounts(project_id, app_root_path)
+        count_dict4=validate_cloud_sql(project_id, app_root_path)
         count_dict.append(count_dict4)
-        count_dict5 = validate_cloud_run(project_id, app_root_path)
+        count_dict5=validate_service_accounts(project_id, app_root_path)
         count_dict.append(count_dict5)
-        count_dict6 = validate_cloud_function(project_id, app_root_path)
+        count_dict6=validate_cloud_run(project_id, app_root_path)
         count_dict.append(count_dict6)
-        count_dict7 = validate_app_engine(project_id, app_root_path)
+        count_dict7=validate_cloud_function(project_id, app_root_path)
         count_dict.append(count_dict7)
-        count_dict8 = validate_api_security(project_id, app_root_path)
+        count_dict8=validate_app_engine(project_id,app_root_path)
         count_dict.append(count_dict8)
+        count_dict9=validate_api_security(project_id, app_root_path)
+        count_dict.append(count_dict9)
 
         status = "Success"
         status_dict = {"status": status, "report_list": count_dict}
@@ -60,6 +62,13 @@ def validate_bq(project_id, app_root_path):
     file = 'bq_status_report.html'
     count_dict = convert_to_html(status_list_bq, file, app_root_path, service_name)
     return count_dict
+
+def validate_bq_PII(project_id, app_root_path):
+    file_name = '../rule_yaml/' + '_bq_PII_' + 'rule.yaml'
+    dataset, table, entity_list, regex_list=get_yaml(file_name)
+    status_list_bq_PII = bq_PII_data_validation(project_id, dataset, table,entity_list,regex_list)
+    file = 'bq_PII_status_report.html'
+    count_dict=convert_to_html(status_list_bq_PII, file, app_root_path)
 
 
 def validate_cloud_sql(project_id, app_root_path):

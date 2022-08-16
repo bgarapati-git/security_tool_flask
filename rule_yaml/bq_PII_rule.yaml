@@ -1,0 +1,16 @@
+
+rules:
+  - name: BigQuery rule for PII data
+    rule_id: 'SML-DE-3'
+    priority: 'HIGH'
+    Dataset_name: 'test_security'
+    Table_name: 'PII_data_testing'
+    PII_data:
+      - entity: 'email'
+        regex: '@[a-zA-Z0-9-]+\.[a-zA-z0-9-.]+'
+      - entity: 'cc_number'
+        regex: '^\d{9,18}$'
+
+  
+
+

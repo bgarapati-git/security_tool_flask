@@ -21,16 +21,18 @@ role_svc="Service Account has roles/editor or roles/owner privilege"
 default_svc="Default Service Account is used"
 function_name="Function Name"
 url="URL"
+Dataset='Dataset'
+Table="Table"
 
 #Services
 gcs="Cloud Storage"
 gcr="Cloud Run"
-big_query='Big Query'
+big_query='BigQuery'
 cloud_sql="Cloud SQL"
 gcf="Cloud Function"
 app_engine= "App Engine"
 api_security= "API Security"
-service_accounts="Service Accounts"
+
 #Rule Ids
 
 gcs_rule="SML-GCS-1"
@@ -40,6 +42,7 @@ bq_rule_2='SML_BQ_02'
 bq_rule_3='SML_BQ_03'
 bq_rule_4='SML_BQ_04'
 bq_rule_0='SML_BQ_00'
+bq_dp_rule='SML-DE-4'
 cloud_sql_rule='SML_SQL_01'
 svc_acnt_rule_1='SML_SVC_01'
 svc_acnt_rule_2='SML_SVC_02'
@@ -55,13 +58,12 @@ api_rule="SML-SEC-1"
 public_entity="Publicly Accessible"
 compliant="Security Compliant"
 public_bucket="Public Bucket"
-public_function="Function is Public"
-public_run="Cloud Run is public"
 
 iam_message = 'iamMember is public'
 specialGroup = 'specialGroup is public'
 groupByEmail = 'groupByEmail contains google groups'
 userByEmail = 'userByEmail contains gmail'
-url_response= "URL doesn't redirect to https"
+url_response= "Url is not redirected"
 user_managed="User Managed Key is found"
-api_unsecured="API allows Empty/Invalid Tokens"
+Failed_due_to_exposed="Failed due to exposed entities: "
+PII_not_exposed="PII data is not exposed"

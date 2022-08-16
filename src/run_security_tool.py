@@ -8,7 +8,7 @@ from src.gcf_validation import check_iam_policy_gcf, get_function_name_list
 from src.gcr_validation import check_iam_policy_gcr, get_gcr_list
 from src.gcs_validation import check_iam_policy
 from src.service_acc_validation import check_rules_yaml_service_accounts
-rom src.bq_PII_validation import get_yaml, bq_PII_data_validation
+from src.bq_PII_validation import get_yaml, bq_PII_data_validation
 
 def run_security_tool(project_id, app_root_path):
     method_name = run_security_tool.__name__

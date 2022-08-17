@@ -21,8 +21,8 @@ role_svc="Service Account has roles/editor or roles/owner privilege"
 default_svc="Default Service Account is used"
 function_name="Function Name"
 url="URL"
-Dataset='Dataset'
-Table="Table"
+Dataset_and_Table='Dataset and Table name'
+
 
 #Services
 gcs="Cloud Storage"

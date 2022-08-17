@@ -67,11 +67,11 @@ def validate_bq_PII(project_id, app_root_path):
     service_name = bq_pii
     #file_name = '../rule_yaml/' + 'bq_PII_rule.yaml'
     file_name = app_root_path + '/rule_yaml/' + 'bq_PII_rule.yaml'
-    dataset, table, entity_list, regex_list=get_yaml(file_name)
-    status_list_bq_PII = bq_PII_data_validation(project_id, dataset, table,entity_list,regex_list)
+    dataset_and_table, entity_list, regex_list=get_yaml(file_name)
+    status_list_bq_PII = bq_PII_data_validation(project_id, dataset_and_table,entity_list,regex_list)
     file = 'bq_PII_status_report.html'
     count_dict=convert_to_html(status_list_bq_PII, file, app_root_path,service_name)
-
+    return count_dict
 
 def validate_cloud_sql(project_id, app_root_path):
     service_name = cloud_sql

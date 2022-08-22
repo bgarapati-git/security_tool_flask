@@ -34,6 +34,7 @@ app_engine= "App Engine"
 api_security= "API Security"
 service_accounts="Service Accounts"
 bq_pii ='BQ PII Validation'
+git_validate="Git Validation"
 #Rule Ids
 
 gcs_rule="SML-GCS-1"

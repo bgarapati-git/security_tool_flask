@@ -1,4 +1,5 @@
-from constants import gcs, big_query, cloud_sql, gcr, gcf, app_engine, api_security, service_accounts, bq_pii
+from wsgiref import validate
+from constants import gcs, big_query, cloud_sql, gcr, gcf, app_engine, api_security, service_accounts, bq_pii, git_validate
 from src.api_security_validation import get_urls, check_api
 from src.app_engine_validation import get_app_urls, check_app_engine
 from src.bq_validation import get_bq_dataset_list, check_rules_yaml
@@ -9,29 +10,31 @@ from src.gcr_validation import check_iam_policy_gcr, get_gcr_list
 from src.gcs_validation import check_iam_policy
 from src.service_acc_validation import check_rules_yaml_service_accounts
 from src.bq_PII_validation import get_yaml, bq_PII_data_validation
-
+from src.trufflehog_validation import get_url, get_secrets
 def run_security_tool(project_id, app_root_path):
     method_name = run_security_tool.__name__
     count_dict = []
     try:
-        count_dict1 = validate_gcs_buckets(project_id, app_root_path)
-        count_dict.append(count_dict1)
-        count_dict2 = validate_bq(project_id, app_root_path)
-        count_dict.append(count_dict2)
-        count_dict3=validate_bq_PII(project_id, app_root_path)
-        count_dict.append(count_dict3)
-        count_dict4=validate_cloud_sql(project_id, app_root_path)
-        count_dict.append(count_dict4)
-        count_dict5=validate_service_accounts(project_id, app_root_path)
-        count_dict.append(count_dict5)
-        count_dict6=validate_cloud_run(project_id, app_root_path)
-        count_dict.append(count_dict6)
-        count_dict7=validate_cloud_function(project_id, app_root_path)
-        count_dict.append(count_dict7)
-        count_dict8=validate_app_engine(project_id,app_root_path)
-        count_dict.append(count_dict8)
-        count_dict9=validate_api_security(project_id, app_root_path)
-        count_dict.append(count_dict9)
+        # count_dict1 = validate_gcs_buckets(project_id, app_root_path)
+        # count_dict.append(count_dict1)
+        # count_dict2 = validate_bq(project_id, app_root_path)
+        # count_dict.append(count_dict2)
+        # count_dict3=validate_bq_PII(project_id, app_root_path)
+        # count_dict.append(count_dict3)
+        # count_dict4=validate_cloud_sql(project_id, app_root_path)
+        # count_dict.append(count_dict4)
+        # count_dict5=validate_service_accounts(project_id, app_root_path)
+        # count_dict.append(count_dict5)
+        # count_dict6=validate_cloud_run(project_id, app_root_path)
+        # count_dict.append(count_dict6)
+        # count_dict7=validate_cloud_function(project_id, app_root_path)
+        # count_dict.append(count_dict7)
+        # count_dict8=validate_app_engine(project_id,app_root_path)
+        # count_dict.append(count_dict8)
+        # count_dict9=validate_api_security(project_id, app_root_path)
+        # count_dict.append(count_dict9)
+        count_dict10=validate_git(project_id,app_root_path)
+        count_dict.append(count_dict10)
 
         status = "Success"
         status_dict = {"status": status, "report_list": count_dict}
@@ -130,6 +133,15 @@ def validate_api_security(project_id, app_root_path):
     status_list_api = check_api(urls)
     file = 'api_security_report.html'
     count_dict = convert_to_html(status_list_api, file, app_root_path, service_name)
+    return count_dict
+
+def validate_git(project_id,app_root_path):
+    service_name = git_validate
+    file_name = app_root_path +'/rule_yaml/' + 'git_' + 'rules.yaml'
+    url=get_url(file_name)
+    file='result.json'
+    get_secrets(url, app_root_path, file)
+    count_dict = {"filename": file, "service": service_name, "fail_count": "-", "pass_count": "-"}
     return count_dict
 
 

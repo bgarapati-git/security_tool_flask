@@ -13,6 +13,7 @@ from constants import iam_message, specialGroup, groupByEmail, userByEmail, big_
 
 def get_bq_dataset_list(project_id):
     method = get_bq_dataset_list.__name__
+    dataset_list=[]
     try:
         list_ = subprocess.getoutput('bq ls --format=prettyjson --project_id' + ' ' + project_id)
         i=list_.find("[")

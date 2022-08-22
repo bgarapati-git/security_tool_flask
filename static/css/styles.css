@@ -1,7 +1,7 @@
 
 
 .dataframe {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   border-collapse: collapse;
   width: 80%;
   margin:auto;
@@ -11,17 +11,19 @@
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
-.dataframe tr:nth-child(even){background-color: #f2f2f2;}
+
 .dataframe tr:hover {background-color: #ddd;}
 
 .dataframe th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: darkblue;
+  background-color: #27aae1;
   color: white;
+  font-family: 'Montserrat', sans-serif;
 }
 
 

@@ -37,7 +37,11 @@ def convert_to_html(status_list, file, app_root_path, service_name):
         <html>
           <head><title>Report</title></head>
           <link rel="stylesheet" type="text/css" href="../static/css/styles.css"/>
-          <script type="text/javascript" src="../static/css/script.js"></script>          
+          <script type="text/javascript" src="../static/css/script.js"></script> 
+          <img src="../static/img/springml_logo.png">
+          <br>
+          <br>
+          <br>        
           {table}
           <script>
             createtable();

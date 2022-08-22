@@ -19,6 +19,25 @@ rules:
         regex: '^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$'
       - entity: "zip"
         regex: '^\d{5}$'
+  - name: BigQuery rule for PII data
+    rule_id: 'SML-DE-3'
+    priority: 'HIGH'
+    Dataset_and_Table: 'test_security.PII_masked_data' #format-dataset_name.table_name
+    PII_data: 
+      - entity: 'email'
+        regex: '@[a-zA-Z0-9-]+\.[a-zA-z0-9-.]+'
+      - entity: 'cc_number'
+        regex: '(\d{4} *\d{4} *\d{4} *\d{4})'
+      - entity: "cc_cvc"
+        regex:  '[3-9]\d\d'
+      - entity: "cc_expiredate"
+        regex: '^[0-9]{4}[/\-][0-9]{2}[/\-][0-9]{2}$'
+      - entity: "birthdate"
+        regex: '^[0-9]{4}[/\-][0-9]{2}[/\-][0-9]{2}$'
+      - entity: "phone"
+        regex: '^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$'
+      - entity: "zip"
+        regex: '^\d{5}$'
 
   
       

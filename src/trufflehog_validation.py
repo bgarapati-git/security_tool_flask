@@ -18,7 +18,7 @@ def get_secrets(urls, app_root_path, file):
     method=get_secrets.__name__
     try:
         for git_url in urls:
-            output=subprocess.getoutput('truffleHog --regex --json --entropy=False ' + git_url + ' > '+app_root_path+'/reports/output.json')
+            output=subprocess.getoutput('trufflehog --regex --json --entropy=False ' + git_url + ' > '+app_root_path+'/reports/output.json')
             #print(output)
         dict_list=[]
         file_name=app_root_path+'/reports/output.json'

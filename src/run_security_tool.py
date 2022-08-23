@@ -4,7 +4,7 @@ from src.api_security_validation import get_urls, check_api
 from src.app_engine_validation import get_app_urls, check_app_engine
 from src.bq_validation import get_bq_dataset_list, check_rules_yaml
 from src.cloud_sql_validation import check_public_ip, get_cloud_sql_list
-from src.common_functions import get_list, get_yaml_entities_public, convert_to_html
+from src.common_functions import convert_to_html_git, get_list, get_yaml_entities_public, convert_to_html
 from src.gcf_validation import check_iam_policy_gcf, get_function_name_list
 from src.gcr_validation import check_iam_policy_gcr, get_gcr_list
 from src.gcs_validation import check_iam_policy
@@ -138,10 +138,10 @@ def validate_api_security(project_id, app_root_path):
 def validate_git(project_id,app_root_path):
     service_name = git_validate
     file_name = app_root_path +'/rule_yaml/' + 'git_' + 'rules.yaml'
-    url=get_url(file_name)
-    file='result.json'
-    get_secrets(url, app_root_path, file)
-    count_dict = {"filename": file, "service": service_name, "fail_count": "-", "pass_count": "-"}
+    url = get_url(file_name)
+    file ='git_validation_report.html'
+    dict_list = get_secrets(url, app_root_path, file)
+    count_dict = convert_to_html_git(dict_list, file, app_root_path, service_name)
     return count_dict
 
 

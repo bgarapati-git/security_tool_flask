@@ -22,6 +22,12 @@ default_svc="Default Service Account is used"
 function_name="Function Name"
 url="URL"
 Dataset_and_Table='Dataset and Table name'
+repository='Repository'
+branch='Branch Name'
+commit_name="Commit Name"
+commit_hash="Commit Hash"
+path="Path"
+reason="Reason"
 
 
 #Services

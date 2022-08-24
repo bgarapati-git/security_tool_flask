@@ -15,13 +15,13 @@ def run_security_tool(project_id, app_root_path):
     method_name = run_security_tool.__name__
     count_dict = []
     try:
-        count_dict1 = validate_gcs_buckets(project_id, app_root_path)
+        '''count_dict1 = validate_gcs_buckets(project_id, app_root_path)
         count_dict.append(count_dict1)
         count_dict2 = validate_bq(project_id, app_root_path)
-        count_dict.append(count_dict2)
+        count_dict.append(count_dict2)'''
         count_dict3=validate_bq_PII(project_id, app_root_path)
         count_dict.append(count_dict3)
-        count_dict4=validate_cloud_sql(project_id, app_root_path)
+        '''count_dict4=validate_cloud_sql(project_id, app_root_path)
         count_dict.append(count_dict4)
         count_dict5=validate_service_accounts(project_id, app_root_path)
         count_dict.append(count_dict5)
@@ -34,7 +34,7 @@ def run_security_tool(project_id, app_root_path):
         count_dict9=validate_api_security(project_id, app_root_path)
         count_dict.append(count_dict9)
         count_dict10=validate_git(project_id,app_root_path)
-        count_dict.append(count_dict10)
+        count_dict.append(count_dict10)'''
 
         status = "Success"
         status_dict = {"status": status, "report_list": count_dict}

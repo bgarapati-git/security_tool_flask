@@ -8,10 +8,15 @@ from src.common_functions import get_list
 
 
 def get_function_name_list():
-    command = "gcloud functions list --format=json"
-    function_list = subprocess.getoutput(command)
-    json_list = json.loads(function_list)
-    function_names = [i['name'].split('/')[-1] for i in json_list]
+    method = get_function_name_list.__name__
+    function_names = []
+    try:
+        command = "gcloud functions list --format=json"
+        function_list = subprocess.getoutput(command)
+        json_list = json.loads(function_list)
+        function_names = [i['name'].split('/')[-1] for i in json_list]
+    except Exception as e:
+        print(f'Exception occurred in {method_name} method exception is{e}')
     print(f'cloud function name list is {function_names}')
     return function_names
 
@@ -49,12 +54,3 @@ def check_iam_policy_gcf(func_list, yaml_entities):
     print(f'status_list is {status_list}')
     return status_list
 
-
-if __name__ == '__main__':
-    project_id = 'badri-29apr2022-scrumteam'
-    command_function = "gcloud functions list --format=" + 'value(name)'
-    function_list = get_list(project_id, command_function)
-    file_name = '../rule_yaml/badri-29apr2022-scrumteam' + '_func_' + 'rules.yaml'
-    entities = get_yaml_entities_public(file_name)
-    status_list_gcf = check_iam_policy_gcf(function_list, entities)
-    print(status_list_gcf)

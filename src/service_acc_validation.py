@@ -87,8 +87,7 @@ def check_rules_yaml_service_accounts(projectId, filename):
         for i in email_data:
             key_types = get_ser_acc_keytypes(i)
             if set(yaml_[5:]) & set(key_types):
-            #message_key = f'{str(set(yaml_[5:]) & set(key_types))} key type is found'
-                status_dict = {service_name: iam_role, rule_id: svc_acnt_rule_3, project_svc: projectId, svc_acnt: i,
+                status_dict = {service_name: iam_role, rule_id: svc_acnt_rule_3, entity: i,priority: high_priority,
                            status_const: fail_status,
                            message: user_managed}
                 status_list.append(status_dict)

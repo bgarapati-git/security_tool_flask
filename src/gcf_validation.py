@@ -1,14 +1,13 @@
 import json
 import subprocess
 
-from constants import service_name, gcf, rule_id, gcf_rule, function_name, high_priority, priority, status_const, \
+from constants import service_name, gcf, rule_id, gcf_rule, high_priority, priority, status_const, \
     message, compliant, pass_status, public_function, entity
-from src.common_functions import get_iam_policy, get_yaml_entities_public
-from src.common_functions import get_list
+from src.common_functions import get_iam_policy
 
 
 def get_function_name_list():
-    method = get_function_name_list.__name__
+    method_name = get_function_name_list.__name__
     function_names = []
     try:
         command = "gcloud functions list --format=json"

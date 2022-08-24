@@ -15,7 +15,6 @@ def get_bq_dataset_list(project_id):
     try:
         list_ = subprocess.getoutput('bq ls --format=prettyjson --project_id' + ' ' + project_id)
         i=list_.find("[")
-        #print(list_[i:])
         json_data = json.loads(list_[i:])
         print(json_data)
         dataset_list = [j['datasetId'] for j in [i['datasetReference'] for i in json_data]]
@@ -45,6 +44,7 @@ def get_yaml(project_id, filename):
 def get_list_roles_users(project_id, dataset):
     method = get_list_roles_users.__name__
     role_data = []
+    role_data_=[]
     try:
         role_data = subprocess.getoutput('bq show --format=prettyjson' + ' ' + project_id + ':' + dataset)
         role_data_=role_data[role_data.find("{"):]
@@ -93,8 +93,6 @@ def check_rules_yaml(project_id, dataset_list, filename):
                     failed_list.append(status)
 
             status_list.extend(failed_list) if len(failed_list) > 0 else status_list.append(status_pass)
-            # print(f'status is {status}')
-            # status_list.append(status)
     except Exception as e:
         print(f'Exception occurred in {method} method exception is {e}')
     return status_list

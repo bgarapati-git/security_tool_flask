@@ -20,7 +20,7 @@ from src.service_acc_validation import check_rules_yaml_service_accounts
 from src.trufflehog_validation import get_url, get_secrets
 
 
-def run_security_tool(project_id, app_root_path):
+def run_security_tool(project_id, app_root_path, user_name):
     method_name = run_security_tool.__name__
     count_dict = []
     try:
@@ -47,7 +47,7 @@ def run_security_tool(project_id, app_root_path):
 
         # Check whether csv is uploaded and delete the csv
         csv_path = os.path.join(app_root_path, 'reports', 'security_status_template.csv')
-        bucket_url = upload_to_gcs(project_id, app_root_path)
+        bucket_url = upload_to_gcs(project_id, app_root_path, user_name)
         if os.path.exists(csv_path) and bucket_url is not None:
             os.remove(csv_path)
         status = "Success"
@@ -162,7 +162,7 @@ def validate_git(project_id, app_root_path):
     return count_dict
 
 
-def upload_to_gcs(project_id, app_root_path):
+def upload_to_gcs(project_id, app_root_path, user_name):
     file_name = app_root_path + '/rule_yaml/' + 'report_gcs_bucket_config.yaml'
     yaml_data = get_yaml_data(file_name)
     gcs_bucket = yaml_data['gcs'][0]['gcs_report_url']
@@ -170,12 +170,8 @@ def upload_to_gcs(project_id, app_root_path):
     upload_folder = os.path.join(app_root_path, 'reports')
     timestamp = calendar.timegm(time.gmtime())
     time_iso = datetime.datetime.fromtimestamp(timestamp).isoformat()
-    suffix = project_id + '_' + str(time_iso)+'/'+'reports'
+    suffix = project_id + '/' + user_name + '_' + str(time_iso) + '/' + 'reports'
     command = "gsutil -m cp -r " + upload_folder + ' ' + gcs_bucket + suffix
     out_put = subprocess.getoutput(command)
     print(f'out_put is {out_put}')
     return gcs_bucket + suffix
-
-
-if __name__ == '__main__':
-    run_security_tool('badri-29apr2022-scrumteam', 'D:\\BINDU_WORK\\securitytool\\security_tool_flask')

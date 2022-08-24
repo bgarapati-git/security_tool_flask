@@ -32,5 +32,3 @@ def get_bucket_status(bucket_iam_policy, yaml_entities):
     return "Fail" if len(list_) > 0 else "Pass"
 
 
-if __name__ == "__main__":
-    get_yaml_entities('badri-29apr2022-scrumteam')

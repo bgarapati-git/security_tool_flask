@@ -3,7 +3,7 @@ import subprocess
 
 from constants import service_name, gcr, rule_id, gcr_rule, priority, high_priority, status_const, \
     message, compliant, pass_status, public_run, entity
-from src.common_functions import get_iam_policy, get_status, get_list, get_yaml_entities_public
+from src.common_functions import get_iam_policy, get_status
 
 
 def get_gcr_list():

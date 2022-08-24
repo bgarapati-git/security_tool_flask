@@ -23,9 +23,14 @@ def get_gcr_list():
 def check_iam_policy_gcr(service_list, yaml_entities):
     method_name = check_iam_policy_gcr.__name__
     status_list = []
+    location=''
+    for i in yaml_entities:
+        if type(i) is dict:
+            location= i['location']
+            break
     try:
         for service in service_list:
-            command = 'gcloud run services get-iam-policy --region=us-central1 --format=json' + ' ' + service
+            command = 'gcloud run services get-iam-policy --region='+location+' '+'--format=json' + ' ' + service
             service_iam_policy = get_iam_policy(service, command)
             status = get_status(service_iam_policy, yaml_entities)
             status_list.append(

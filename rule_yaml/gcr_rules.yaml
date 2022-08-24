@@ -1,6 +1,7 @@
 
 
 rules:
+  - location: 'us-central1'
   - name: Cloud Run rule to search for public services
     rule_id: 'SML-GCR-1'
     priority: 'HIGH'

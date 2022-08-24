@@ -135,6 +135,7 @@ def get_yaml_data(file_name):
 def get_yaml_entities_public(file_name):
     # Open the file and load the file
     method_name = get_yaml_entities_public.__name__
+    entities=[]
     try:
         data = get_yaml_data(file_name)
         entities = [key['entity'] for key in data["rules"]]
@@ -142,6 +143,17 @@ def get_yaml_entities_public(file_name):
         print(f'Exception occurred in {method_name} method exception is{e}')
     return entities
 
+
+def get_yaml_entities_public_gcr(file_name):
+    # Open the file and load the file
+    method_name = get_yaml_entities_public.__name__
+    entities=[]
+    try:
+        data = get_yaml_data(file_name)
+        entities = [key['entity'] if 'entity' in key.keys() else {'location':key['location']} for key in data["rules"]]
+    except Exception as e:
+        print(f'Exception occurred in {method_name} method exception is{e}')
+    return entities
 
 def get_list(project_id, command):
     # List buckets in a project 'gsutil ls -p PROJECT_ID'

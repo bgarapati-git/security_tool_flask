@@ -11,7 +11,7 @@ from src.app_engine_validation import get_app_urls, check_app_engine
 from src.bq_PII_validation import get_yaml, bq_PII_data_validation
 from src.bq_validation import get_bq_dataset_list, check_rules_yaml
 from src.cloud_sql_validation import check_public_ip, get_cloud_sql_list
-from src.common_functions import convert_to_html_git
+from src.common_functions import convert_to_html_git, get_yaml_entities_public_gcr
 from src.common_functions import get_list, get_yaml_entities_public, convert_to_html, get_yaml_data
 from src.gcf_validation import check_iam_policy_gcf, get_function_name_list
 from src.gcr_validation import check_iam_policy_gcr, get_gcr_list
@@ -24,26 +24,26 @@ def run_security_tool(project_id, app_root_path, user_name):
     method_name = run_security_tool.__name__
     count_dict = []
     try:
-        count_dict1 = validate_gcs_buckets(project_id, app_root_path)
-        count_dict.append(count_dict1)
-        count_dict2 = validate_bq(project_id, app_root_path)
-        count_dict.append(count_dict2)
-        count_dict3 = validate_bq_PII(project_id, app_root_path)
-        count_dict.append(count_dict3)
-        count_dict4 = validate_cloud_sql(project_id, app_root_path)
-        count_dict.append(count_dict4)
-        count_dict5 = validate_service_accounts(project_id, app_root_path)
-        count_dict.append(count_dict5)
-        count_dict6 = validate_cloud_run(project_id, app_root_path)
-        count_dict.append(count_dict6)
-        count_dict7 = validate_cloud_function(project_id, app_root_path)
-        count_dict.append(count_dict7)
-        count_dict8 = validate_app_engine(project_id, app_root_path)
-        count_dict.append(count_dict8)
-        count_dict9 = validate_api_security(project_id, app_root_path)
-        count_dict.append(count_dict9)
-        count_dict10 = validate_git(project_id, app_root_path)
-        count_dict.append(count_dict10)
+        count_gcs = validate_gcs_buckets(project_id, app_root_path)
+        count_dict.append(count_gcs)
+        count_bq = validate_bq(project_id, app_root_path)
+        count_dict.append(count_bq)
+        count_bq_pii = validate_bq_PII(project_id, app_root_path)
+        count_dict.append(count_bq_pii)
+        count_sql = validate_cloud_sql(project_id, app_root_path)
+        count_dict.append(count_sql)
+        count_sa = validate_service_accounts(project_id, app_root_path)
+        count_dict.append(count_sa)
+        count_gcr = validate_cloud_run(project_id, app_root_path)
+        count_dict.append(count_gcr)
+        count_gcf = validate_cloud_function(project_id, app_root_path)
+        count_dict.append(count_gcf)
+        count_app = validate_app_engine(project_id, app_root_path)
+        count_dict.append(count_app)
+        count_api = validate_api_security(project_id, app_root_path)
+        count_dict.append(count_api)
+        count_git = validate_git(project_id, app_root_path)
+        count_dict.append(count_git)
 
         # Check whether csv is uploaded and delete the csv
         csv_path = os.path.join(app_root_path, 'reports', 'security_status_template.csv')
@@ -115,7 +115,7 @@ def validate_cloud_run(project_id, app_root_path):
     service_name = gcr
     file_name = app_root_path + '/rule_yaml/' + 'gcr_' + 'rules.yaml'
     service_list = get_gcr_list()
-    entities = get_yaml_entities_public(file_name)
+    entities = get_yaml_entities_public_gcr(file_name)
     status_list_gcr = check_iam_policy_gcr(service_list, entities)
     file = 'gcr_status_report.html'
     count_dict = convert_to_html(status_list_gcr, file, app_root_path, service_name)

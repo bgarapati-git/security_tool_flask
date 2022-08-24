@@ -1,8 +1,8 @@
 import json
 import subprocess
 
-from constants import service_name, gcr, rule_id, gcr_rule, gcr_service_name, priority, high_priority, status_const, \
-    message, public_entity, compliant, pass_status, public_bucket, public_run
+from constants import service_name, gcr, rule_id, gcr_rule, priority, high_priority, status_const, \
+    message, compliant, pass_status, public_run, entity
 from src.common_functions import get_iam_policy, get_status, get_list, get_yaml_entities_public
 
 
@@ -24,7 +24,7 @@ def check_iam_policy_gcr(service_list, yaml_entities):
             service_iam_policy = get_iam_policy(service, command)
             status = get_status(service_iam_policy, yaml_entities)
             status_list.append(
-                {service_name: gcr, rule_id: gcr_rule, gcr_service_name: service, priority: high_priority,
+                {service_name: gcr, rule_id: gcr_rule, entity: service, priority: high_priority,
                  status_const: status, message: compliant if status == pass_status else public_run})
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')

@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 
 import pandas as pd
@@ -36,9 +37,9 @@ def convert_to_html(status_list, file, app_root_path, service_name):
         html_string = '''
         <html>
           <head><title>Report</title></head>
-          <link rel="stylesheet" type="text/css" href="../static/css/styles.css"/>
-          <script type="text/javascript" src="../static/css/script.js"></script> 
-          <img src="../static/img/springml_logo.png">
+          <link rel="stylesheet" type="text/css" href="../reports/static/css/styles.css"/>
+          <script type="text/javascript" src="../reports/static/css/script.js"></script> 
+          <img src="../reports/static/img/springml_logo.png">
           <br>
           <br>
           <br>        
@@ -51,12 +52,17 @@ def convert_to_html(status_list, file, app_root_path, service_name):
 
         # OUTPUT AN HTML FILE
         with open(app_root_path + "/reports/" + file, 'w') as f:
-            print(f'app_root_path is {app_root_path}')
             f.write(html_string.format(table=df.to_html(index=False, classes='mystyle')))
             f.close()
+
+        # Append failed records to csv
+        csv_path = os.path.join(app_root_path, 'reports', 'security_status_template.csv')
+        df_fail.to_csv(csv_path, mode='a' if os.path.exists(csv_path) else 'w', index=False,
+                       header=not os.path.exists(csv_path))
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
     return count_dict
+
 
 def convert_to_html_git(status_list, file, app_root_path, service_name):
     method_name = convert_to_html.__name__
@@ -64,19 +70,14 @@ def convert_to_html_git(status_list, file, app_root_path, service_name):
     count_dict = {}
     try:
         df = pd.DataFrame.from_records(status_list)
-        # df_fail = df[df.Status == "Fail"]
-        # fail_count = len(df_fail)
-        # df_pass = df[df.Status == "Pass"]
-        # pass_count = len(df_pass)
         count_dict = {"filename": file, "service": service_name, "fail_count": '-', "pass_count": "-"}
-        # df = df.sort_values(by='Status')
 
         html_string = '''
         <html>
           <head><title>Report</title></head>
-          <link rel="stylesheet" type="text/css" href="../static/css/styles.css"/>
-          <script type="text/javascript" src="../static/css/script.js"></script> 
-          <img src="../static/img/springml_logo.png">
+          <link rel="stylesheet" type="text/css" href="../reports/static/css/styles.css"/>
+          <script type="text/javascript" src="../reports/static/css/script.js"></script> 
+          <img src="../reports/static/img/springml_logo.png">
           <br>
           <br>
           <br>        
@@ -95,6 +96,7 @@ def convert_to_html_git(status_list, file, app_root_path, service_name):
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
     return count_dict
+
 
 def execute_command(command):
     output = subprocess.getoutput(command)

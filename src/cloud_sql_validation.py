@@ -6,8 +6,8 @@ import subprocess
 import yaml
 from yaml import SafeLoader
 
-from constants import pass_status, fail_status, service_name, cloud_sql, rule_id, cloud_sql_rule, sql_instance, \
-    status_const, message, compliant, cloud_sql_public
+from constants import pass_status, fail_status, service_name, cloud_sql, rule_id, cloud_sql_rule, status_const, message, \
+    compliant, cloud_sql_public, priority, high_priority, entity
 
 
 def get_cloud_sql_list(project_id):
@@ -62,7 +62,7 @@ def check_public_ip(sql_list, project_id,file_name):
         for i in sql_list:
             public_ip = get_ip_config(i)
             status = fail_status if (yaml_ in public_ip) else pass_status
-            status_dict = {service_name: cloud_sql, rule_id: cloud_sql_rule, sql_instance: i, status_const: status,
+            status_dict = {service_name: cloud_sql, rule_id: cloud_sql_rule, entity: i,priority: high_priority, status_const: status,
                            message: compliant if status == pass_status else cloud_sql_public}
             status_list.append(status_dict)
     except Exception as e:

@@ -1,0 +1,2 @@
+gcs:
+  - gcs_report_url: gs://security_tool_reports/

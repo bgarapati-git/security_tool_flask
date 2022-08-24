@@ -2,8 +2,9 @@ import sys
 sys.path.append('../')
 
 from google.cloud import bigquery
-from constants import service_name,message,rule_id,priority,status_const,big_query,bq_dp_rule,Failed_due_to_exposed,high_priority, \
-    pass_status,fail_status, PII_not_exposed, Dataset_and_Table
+from constants import service_name, message, rule_id, priority, status_const, big_query, bq_dp_rule, \
+    Failed_due_to_exposed, high_priority, \
+    pass_status, fail_status, PII_not_exposed, entity
 from src.common_functions import get_yaml_data
 
 # Construct a BigQuery client object.
@@ -48,7 +49,7 @@ def bq_PII_data_validation(project_id,dataset_and_table,entity_list,regex_list):
             if Status=="Fail":
                 Failed_entities.append(entity_list[i][j])
         if len(Failed_entities)==0:
-            status_list.append({service_name: big_query, rule_id: bq_dp_rule, Dataset_and_Table: dataset_table, priority: high_priority,
+            status_list.append({service_name: big_query, rule_id: bq_dp_rule, entity: dataset_table, priority: high_priority,
                                 status_const:pass_status, message:PII_not_exposed})
         else:
             s=''
@@ -58,7 +59,7 @@ def bq_PII_data_validation(project_id,dataset_and_table,entity_list,regex_list):
                 else:
                    s=s+i+", " 
 
-            status_list.append({service_name: big_query, rule_id: bq_dp_rule, Dataset_and_Table: dataset_table, priority: high_priority,
+            status_list.append({service_name: big_query, rule_id: bq_dp_rule, entity: dataset_table, priority: high_priority,
                                 status_const:fail_status, message:Failed_due_to_exposed+s})
     print(status_list)
     return(status_list)

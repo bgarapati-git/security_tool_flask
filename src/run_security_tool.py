@@ -1,16 +1,25 @@
-from wsgiref import validate
-from constants import gcs, big_query, cloud_sql, gcr, gcf, app_engine, api_security, service_accounts, bq_pii, git_validate
+import calendar
+import datetime
+import os
+import subprocess
+import time
+
+from constants import gcs, big_query, cloud_sql, gcr, gcf, app_engine, api_security, service_accounts, bq_pii, \
+    git_validate
 from src.api_security_validation import get_urls, check_api
 from src.app_engine_validation import get_app_urls, check_app_engine
+from src.bq_PII_validation import get_yaml, bq_PII_data_validation
 from src.bq_validation import get_bq_dataset_list, check_rules_yaml
 from src.cloud_sql_validation import check_public_ip, get_cloud_sql_list
-from src.common_functions import convert_to_html_git, get_list, get_yaml_entities_public, convert_to_html
+from src.common_functions import convert_to_html_git
+from src.common_functions import get_list, get_yaml_entities_public, convert_to_html, get_yaml_data
 from src.gcf_validation import check_iam_policy_gcf, get_function_name_list
 from src.gcr_validation import check_iam_policy_gcr, get_gcr_list
 from src.gcs_validation import check_iam_policy
 from src.service_acc_validation import check_rules_yaml_service_accounts
-from src.bq_PII_validation import get_yaml, bq_PII_data_validation
 from src.trufflehog_validation import get_url, get_secrets
+
+
 def run_security_tool(project_id, app_root_path):
     method_name = run_security_tool.__name__
     count_dict = []
@@ -19,25 +28,30 @@ def run_security_tool(project_id, app_root_path):
         count_dict.append(count_dict1)
         count_dict2 = validate_bq(project_id, app_root_path)
         count_dict.append(count_dict2)
-        count_dict3=validate_bq_PII(project_id, app_root_path)
+        count_dict3 = validate_bq_PII(project_id, app_root_path)
         count_dict.append(count_dict3)
-        count_dict4=validate_cloud_sql(project_id, app_root_path)
+        count_dict4 = validate_cloud_sql(project_id, app_root_path)
         count_dict.append(count_dict4)
-        count_dict5=validate_service_accounts(project_id, app_root_path)
+        count_dict5 = validate_service_accounts(project_id, app_root_path)
         count_dict.append(count_dict5)
-        count_dict6=validate_cloud_run(project_id, app_root_path)
+        count_dict6 = validate_cloud_run(project_id, app_root_path)
         count_dict.append(count_dict6)
-        count_dict7=validate_cloud_function(project_id, app_root_path)
+        count_dict7 = validate_cloud_function(project_id, app_root_path)
         count_dict.append(count_dict7)
-        count_dict8=validate_app_engine(project_id,app_root_path)
+        count_dict8 = validate_app_engine(project_id, app_root_path)
         count_dict.append(count_dict8)
-        count_dict9=validate_api_security(project_id, app_root_path)
+        count_dict9 = validate_api_security(project_id, app_root_path)
         count_dict.append(count_dict9)
-        count_dict10=validate_git(project_id,app_root_path)
+        count_dict10 = validate_git(project_id, app_root_path)
         count_dict.append(count_dict10)
 
+        # Check whether csv is uploaded and delete the csv
+        csv_path = os.path.join(app_root_path, 'reports', 'security_status_template.csv')
+        bucket_url = upload_to_gcs(project_id, app_root_path)
+        if os.path.exists(csv_path) and bucket_url is not None:
+            os.remove(csv_path)
         status = "Success"
-        status_dict = {"status": status, "report_list": count_dict}
+        status_dict = {"status": status, "report_list": count_dict, "gcs_url": bucket_url}
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
         status = "Fail"
@@ -66,15 +80,17 @@ def validate_bq(project_id, app_root_path):
     count_dict = convert_to_html(status_list_bq, file, app_root_path, service_name)
     return count_dict
 
+
 def validate_bq_PII(project_id, app_root_path):
     service_name = bq_pii
-    #file_name = '../rule_yaml/' + 'bq_PII_rule.yaml'
+    # file_name = '../rule_yaml/' + 'bq_PII_rule.yaml'
     file_name = app_root_path + '/rule_yaml/' + 'bq_PII_rule.yaml'
-    dataset_and_table, entity_list, regex_list=get_yaml(file_name)
-    status_list_bq_PII = bq_PII_data_validation(project_id, dataset_and_table,entity_list,regex_list)
+    dataset_and_table, entity_list, regex_list = get_yaml(file_name)
+    status_list_bq_PII = bq_PII_data_validation(project_id, dataset_and_table, entity_list, regex_list)
     file = 'bq_PII_status_report.html'
-    count_dict=convert_to_html(status_list_bq_PII, file, app_root_path,service_name)
+    count_dict = convert_to_html(status_list_bq_PII, file, app_root_path, service_name)
     return count_dict
+
 
 def validate_cloud_sql(project_id, app_root_path):
     service_name = cloud_sql
@@ -135,15 +151,31 @@ def validate_api_security(project_id, app_root_path):
     count_dict = convert_to_html(status_list_api, file, app_root_path, service_name)
     return count_dict
 
-def validate_git(project_id,app_root_path):
+
+def validate_git(project_id, app_root_path):
     service_name = git_validate
-    file_name = app_root_path +'/rule_yaml/' + 'git_' + 'rules.yaml'
+    file_name = app_root_path + '/rule_yaml/' + 'git_' + 'rules.yaml'
     url = get_url(file_name)
-    file ='git_validation_report.html'
+    file = 'git_validation_report.html'
     dict_list = get_secrets(url, app_root_path, file)
     count_dict = convert_to_html_git(dict_list, file, app_root_path, service_name)
     return count_dict
 
 
+def upload_to_gcs(project_id, app_root_path):
+    file_name = app_root_path + '/rule_yaml/' + 'report_gcs_bucket_config.yaml'
+    yaml_data = get_yaml_data(file_name)
+    gcs_bucket = yaml_data['gcs'][0]['gcs_report_url']
+    print(f'gcs_bucket is {gcs_bucket}')
+    upload_folder = os.path.join(app_root_path, 'reports')
+    timestamp = calendar.timegm(time.gmtime())
+    time_iso = datetime.datetime.fromtimestamp(timestamp).isoformat()
+    suffix = project_id + '_' + str(time_iso)+'/'+'reports'
+    command = "gsutil -m cp -r " + upload_folder + ' ' + gcs_bucket + suffix
+    out_put = subprocess.getoutput(command)
+    print(f'out_put is {out_put}')
+    return gcs_bucket + suffix
+
+
 if __name__ == '__main__':
-    run_security_tool()
+    run_security_tool('badri-29apr2022-scrumteam', 'D:\\BINDU_WORK\\securitytool\\security_tool_flask')

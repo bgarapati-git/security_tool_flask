@@ -28,7 +28,7 @@ commit_name="Commit Name"
 commit_hash="Commit Hash"
 path="Path"
 reason="Reason"
-
+entity="Entity Name"
 
 #Services
 gcs="Cloud Storage"

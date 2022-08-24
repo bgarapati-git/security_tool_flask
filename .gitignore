@@ -1,5 +1,5 @@
 /.venv
 /.idea
 __pycache__/
-/reports
+/reports/*.html
 /env

@@ -1,13 +1,13 @@
 import json
-
-import requests
 import subprocess
 import sys
 
+import requests
+
 sys.path.append('../')
-from constants import service_name, message, rule_id, priority, status_const, app_engine, ae_rule, url, url_response, \
+from constants import service_name, message, rule_id, priority, status_const, app_engine, ae_rule, url_response, \
     compliant, high_priority, \
-    pass_status, fail_status
+    pass_status, fail_status, entity
 
 
 def get_app_urls(project_id):
@@ -34,10 +34,10 @@ def check_app_engine(urls):
         request = requests.get(i)
         resp = request.history
         if '<Response [302]>' in str(resp) or '<Response [301]>' in str(resp):
-            status_list.append({service_name: app_engine, rule_id: ae_rule, url: i, priority: high_priority,
+            status_list.append({service_name: app_engine, rule_id: ae_rule, entity: i, priority: high_priority,
                                 status_const: pass_status, message: compliant})
         else:
-            status_list.append({service_name: app_engine, rule_id: ae_rule, url: i, priority: high_priority,
+            status_list.append({service_name: app_engine, rule_id: ae_rule, entity: i, priority: high_priority,
                                 status_const: fail_status, message: url_response})
     print(status_list)
     return status_list

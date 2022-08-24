@@ -2,13 +2,12 @@
 import json
 import subprocess
 
-
 import yaml
 from yaml import SafeLoader
 
 from constants import iam_message, specialGroup, groupByEmail, userByEmail, big_query, service_name, rule_id, \
-    data_set_name, status_const, pass_status, fail_status, message, compliant, bq_rule_1, bq_rule_2, bq_rule_3, \
-    bq_rule_4, bq_rule_0
+    status_const, pass_status, fail_status, message, compliant, bq_rule_1, bq_rule_2, bq_rule_3, \
+    bq_rule_4, bq_rule_0, priority, high_priority, entity
 
 
 def get_bq_dataset_list(project_id):
@@ -69,27 +68,27 @@ def check_rules_yaml(project_id, dataset_list, filename):
             print(f'roles is {roles}')
             json_ = json.loads(roles)
             dict_list = json_['access']
-            status_pass = {service_name: big_query, rule_id: bq_rule_0, data_set_name: dataset,
+            status_pass = {service_name: big_query, rule_id: bq_rule_0, entity: dataset,priority: high_priority,
                            status_const: pass_status,
                            message: compliant}
             for i in dict_list:
                 if 'specialGroup' in i.keys() and i['specialGroup'] == yaml_data['specialGroup']:
-                    status = {service_name: big_query, rule_id: bq_rule_1, data_set_name: dataset,
+                    status = {service_name: big_query, rule_id: bq_rule_1, entity: dataset,priority: high_priority,
                               status_const: fail_status, message: specialGroup}
                     failed_list.append(status)
 
                 if 'iamMember' in i.keys() and i['iamMember'] == yaml_data['iamMember']:
-                    status = {service_name: big_query, rule_id: bq_rule_2, data_set_name: dataset,
+                    status = {service_name: big_query, rule_id: bq_rule_2, entity: dataset,priority: high_priority,
                               status_const: fail_status, message: iam_message}
                     failed_list.append(status)
 
                 if 'groupByEmail' in i.keys() and google_groups in i['groupByEmail']:
-                    status = {service_name: big_query, rule_id: bq_rule_3, data_set_name: dataset,
+                    status = {service_name: big_query, rule_id: bq_rule_3, entity: dataset,priority: high_priority,
                               status_const: fail_status, message: groupByEmail}
                     failed_list.append(status)
 
                 if 'userByEmail' in i.keys() and gmail in i['userByEmail']:
-                    status = {service_name: big_query, rule_id: bq_rule_4, data_set_name: dataset,
+                    status = {service_name: big_query, rule_id: bq_rule_4, entity: dataset,priority: high_priority,
                               status_const: fail_status, message: userByEmail}
                     failed_list.append(status)
 

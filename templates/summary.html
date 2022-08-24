@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--<link rel="stylesheet" type="text/css" href="../static/css/styles.css"/>-->
-<!--<script type="text/javascript" src="../static/css/script.js"></script>-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +19,7 @@
     <div class="container">
         <div class="row  mt-4">
             <div class="col-md-12">
-                <img src="../static/img/springml_logo.png">
+                <img src="{{ url_for('static',filename='img/springml_logo.png') }}">
             </div>
             <div class="col-md-12">
                 <h2 class="fw-bolder" align="center">{{ table_title }}</h2>
@@ -41,9 +39,10 @@
                         {% for record in report_list %}
                         <tr>
                             {% for key in keys %}
-                            <td>{{ record[key] }}</td>
+                            <td align="center" >{{ record[key] }}</td>
                             {% endfor %}
-                            <td>
+                            <td align="center">{{gcs_url}}</td>
+                            <td align="center">
                                 <button onclick="openReport('{{ record['filename'] }}')" id="b4"> View </button>
                             </td>
                         </tr>

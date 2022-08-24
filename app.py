@@ -6,7 +6,9 @@ from flask_cors import CORS
 
 from src.run_security_tool import run_security_tool
 
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__,static_url_path='/reports/static',
+            static_folder='reports/static')
+
 CORS(app, support_credentials=True, expose_headers=["Content-Disposition"])
 
 
@@ -14,13 +16,14 @@ CORS(app, support_credentials=True, expose_headers=["Content-Disposition"])
 def render_html():
     report_list = get_files_list()
     if len(report_list) > 0:
-        col_names = ["SERVICE", "PASS COUNT", "FAIL COUNT", "VIEW"]
+        col_names = ["SERVICE", "PASS COUNT", "FAIL COUNT","GCS REPORT LOCATION", "VIEW" ]
         keys = ["service", "pass_count", "fail_count"]
         context = {
             "table_title": "Security Assessment Tool",
-            "report_list": report_list,
+            "report_list": report_list['report_list'],
             "col_names": col_names,
-            "keys": keys
+            "keys": keys,
+            "gcs_url": report_list["gcs_url"]
         }
         return render_template("summary.html", title="Security Assessment Tool", **context)
     else:
@@ -32,9 +35,10 @@ def get_files_list():
     project_id = app.config['project_id']
     print(f'project_id is {project_id}')
     status_dict = run_security_tool(project_id, app.root_path)
-    if status_dict['status'] == "Success":
-        data = status_dict['report_list']
-    return data
+    # if status_dict['status'] == "Success":
+    #     data = status_dict['report_list']
+    # return data
+    return status_dict
 
 
 @app.route("/getReport", methods=["GET","POST"])

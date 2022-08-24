@@ -7,10 +7,15 @@ from src.common_functions import get_iam_policy, get_status, get_list, get_yaml_
 
 
 def get_gcr_list():
-    command = "gcloud run services list --format=json"
-    gcr_list = subprocess.getoutput(command)
-    json_list = json.loads(gcr_list)
-    gcr_names = [i['metadata']['name'] for i in json_list]
+    method_name = get_gcr_list.__name__
+    gcr_names = []
+    try:
+        command = "gcloud run services list --format=json"
+        gcr_list = subprocess.getoutput(command)
+        json_list = json.loads(gcr_list)
+        gcr_names = [i['metadata']['name'] for i in json_list]
+    except Exception as e:
+        print(f'Exception occurred in {method_name} method exception is{e}')
     print(f'gcr name list is {gcr_names}')
     return gcr_names
 
@@ -30,12 +35,3 @@ def check_iam_policy_gcr(service_list, yaml_entities):
         print(f'Exception occurred in {method_name} method exception is{e}')
     print(f'status_list is {status_list}')
     return status_list
-
-
-if __name__ == '__main__':
-    project_id = 'badri-29apr2022-scrumteam'
-    command_service = "gcloud run services list --format=" + 'value(name)'
-    service_list = get_list(project_id, command_service)
-    file_name = '../rule_yaml/badri-29apr2022-scrumteam' + '_gcr_' + 'rules.yaml'
-    entities = get_yaml_entities_public(file_name)
-    status_list_gcr = check_iam_policy_gcr(service_list, entities)

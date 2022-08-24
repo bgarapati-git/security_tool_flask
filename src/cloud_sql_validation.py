@@ -1,5 +1,3 @@
-
-
 import json
 import subprocess
 
@@ -12,6 +10,7 @@ from constants import pass_status, fail_status, service_name, cloud_sql, rule_id
 
 def get_cloud_sql_list(project_id):
     method_name = get_cloud_sql_list.__name__
+    sql_list = []
     try:
         list_ = subprocess.getoutput('gcloud sql instances list --format=json --project' + ' ' + project_id)
         json_list = json.loads(list_)
@@ -24,6 +23,7 @@ def get_cloud_sql_list(project_id):
 
 def get_ip_config(sql_name):
     method_name = get_ip_config.__name__
+    ip_config = []
     try:
         ip = subprocess.getoutput("gcloud sql instances describe" + " " + sql_name + " " + "--format=json")
         ip_json = json.loads(ip)
@@ -41,6 +41,7 @@ def get_ip_config(sql_name):
 
 def get_yaml_data_sql(project_id,file_name):
     method_name = get_yaml_data_sql.__name__
+    ip = []
     try:
         #file_name = '../rule_yaml/' + project_id + '_cloud_sql_' + 'rules.yaml'
         print(f'filename is {file_name}')

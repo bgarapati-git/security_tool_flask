@@ -21,6 +21,13 @@ echo "Choose the Services to Test:
 read Services
 #echo $Services
 
+if ! hash python
+then
+sudo apt install python3
+else
+python --version
+fi
+
 #cd security_tool_flask
 python3 -m venv venv
 source venv/bin/activate

@@ -21,7 +21,7 @@ echo "Choose the Services to Test:
 read Services
 #echo $Services
 
-cd security_tool_flask
+#cd security_tool_flask
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt

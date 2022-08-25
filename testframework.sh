@@ -21,11 +21,11 @@ echo "Choose the Services to Test:
 read Services
 #echo $Services
 
-if ! hash python
+if ! hash python3
 then
 sudo apt install python3
 else
-python --version
+python3 --version
 fi
 
 #cd security_tool_flask

@@ -30,6 +30,7 @@ fi
 
 #cd security_tool_flask
 python3 -m venv venv
-source venv/bin/activate
+s=$(source venv/bin/activate)
+$s
 pip install -r requirements.txt
 python3 app.py $projectID $Username $Services

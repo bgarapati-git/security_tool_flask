@@ -7,26 +7,22 @@ Need to update the below yaml files as per the project needs
 * git_rules.yaml   --To validate git repos for API keys 
 
 
-Run the shell script with project_id and the necessary services as inputs
+Run the shell script with project_id username and the necessary services as inputs
 
 Service names that need to be passed to shell script 
 for corresponding cloud services are as below
 
-* Cloud Storage - "GCS"
-* Big Query - "BQ"
-* Big Query PII - "BQ-PII"
-* AppEngine - "APP"
-* API- "API"
-* Cloud SQL - "SQL"
-* Cloud Functions - "GCF"
-* Cloud Run - "GCR"
-* IAM/Service Accounts -"IAM"
-* Git repo Validation - "GIT"
+* [1] Cloud Storage
+* [2] BigQuery
+* [3] BigQuery_PII
+* [4] Cloud SQL
+* [5] Service Accounts
+* [6] Cloud Run
+* [7] Cloud Function
+* [8] App Engine
+* [9] API Security
+* [10] Git Validation
 
-For example if you want to run the tool for only cloud Storage and Big Query use as below
-
-```commandline
-    test.sh project_id "GCS" "BQ"
-```
+For example if you want to run the tool only for cloud Storage and Big Query , Need to provide 1,2 when prompted
 
 

@@ -14,6 +14,7 @@ CORS(app, support_credentials=True, expose_headers=["Content-Disposition"])
 
 @app.route("/")
 def render_html():
+    remove_html_files()
     report_list = get_files_list()
     if len(report_list) > 0:
         col_names = ["SERVICE", "PASS COUNT", "FAIL COUNT", "GCS REPORT LOCATION", "VIEW"]
@@ -34,8 +35,9 @@ def get_files_list():
     data = []
     project_id = app.config['project_id']
     user_name = app.config['user_name']
+    services_list = app.config['services'].split(',')
     print(f'project_id is {project_id}')
-    status_dict = run_security_tool(project_id, app.root_path,user_name)
+    status_dict = run_security_tool(project_id, app.root_path, user_name, services_list)
     # if status_dict['status'] == "Success":
     #     data = status_dict['report_list']
     # return data
@@ -50,6 +52,15 @@ def get_report_file():
     return send_file(path)
 
 
+def remove_html_files():
+    # To check and remove the report html files generated previously before running the tool
+    path = os.path.join(app.root_path, "reports")
+    for file in os.listdir(path):
+        if os.path.isfile(os.path.join(path, file)) and file.find('.html') != -1:
+            os.remove(os.path.join(path, file))
+    return
+
+
 if __name__ == "__main__":
     # print(f'command line arguments are {sys.argv}')
     if len(sys.argv) == 1:
@@ -57,8 +68,7 @@ if __name__ == "__main__":
     elif len(sys.argv) == 2:
         print('Please provide the user name.Refer to Readme.md for help ')
     else:
-        # project = sys.argv[1]
-        # user_name = sys.argv[2]
         app.config['project_id'] = sys.argv[1]
         app.config['user_name'] = sys.argv[2]
+        app.config['services'] = sys.argv[3]
         app.run(debug=True)

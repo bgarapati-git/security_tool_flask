@@ -25,15 +25,10 @@ def check_for_PII_data(project_id, dataset_and_table, entity, regex):
     try:
         query_job = client.query(sql_query)  # Make an API request.
         res = query_job.result()  # Wait for the job to complete.
-
         list_ = []
         for row in res:
             list_.append(row["is_valid"])
         print(list_)
-        # if True in list_:
-        #     status="Fail"
-        # else:
-        #     status="Pass"
         status = "Fail" if True in list_ else "Pass"
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
@@ -48,24 +43,20 @@ def bq_PII_data_validation(project_id, dataset_and_table, entity_list, regex_lis
     status_list = []
     try:
         for i in range(len(entity_list)):
-            Failed_entities = []
+            failed_entities = []
             dataset_table = dataset_and_table[i]
             for j in range(len(entity_list[i])):
                 Status = check_for_PII_data(project_id, dataset_table, entity_list[i][j], regex_list[i][j])
-                if Status == "Fail":
-                    Failed_entities.append(entity_list[i][j])
-            if len(Failed_entities) == 0:
+                if Status == fail_status:
+                    failed_entities.append(entity_list[i][j])
+            if len(failed_entities) == 0:
                 status_list.append(
                     {service_name: big_query, rule_id: bq_dp_rule, entity: dataset_table, priority: high_priority,
                      status_const: pass_status, message: PII_not_exposed})
             else:
                 s = ''
-                for i in Failed_entities:
-                    # if i == Failed_entities[-1]:
-                    #     s = s + i
-                    # else:
-                    #     s = s + i + ", "
-                    s = s + i if i == Failed_entities[-1] else s + i + ", "
+                for i in failed_entities:
+                    s = s + i if i == failed_entities[-1] else s + i + ", "
                 status_list.append(
                     {service_name: big_query, rule_id: bq_dp_rule, entity: dataset_table, priority: high_priority,
                      status_const: fail_status, message: Failed_due_to_exposed + s})

@@ -145,8 +145,8 @@ def validate_app_engine(project_id, app_root_path):
 def validate_api_security(project_id, app_root_path):
     service_name = api_security
     file_name = app_root_path + '/rule_yaml/' + 'api_' + 'urls.yml'
-    urls = (get_urls(file_name))
-    status_list_api = check_api(urls)
+    urls,methods= (get_urls(file_name))
+    status_list_api = check_api(urls,methods)
     file = 'api_security_report.html'
     count_dict = convert_to_html(status_list_api, file, app_root_path, service_name)
     return count_dict

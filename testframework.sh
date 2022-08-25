@@ -25,4 +25,4 @@ cd security_tool_flask
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python3 app.py badri-29apr2022-scrumteam $projectID
+python3 app.py badri-29apr2022-scrumteam $projectID $Username $Services

@@ -17,7 +17,7 @@ echo "Choose the Services to Test:
       [9] API Security
       [10] Git Validation
 
-      format: [2,4,6]"
+      format: 2,4,6
 read Services
 #echo $Services
 

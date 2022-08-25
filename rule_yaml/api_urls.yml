@@ -9,6 +9,8 @@ endpoints:
                - 'Bearer 111111111111111111111'
       Content-Type: 
                - 'application/json'
+    method:
+      - "POST"
   app2: 
     url: 
       - "https://us-central1-badri-29apr2022-scrumteam.cloudfunctions.net/hello_get"
@@ -19,3 +21,5 @@ endpoints:
                - 'Bearer 111111111111111111111'
       Content-Type: 
                - 'application/json'
+    method:
+     - "GET"

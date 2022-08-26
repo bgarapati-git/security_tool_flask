@@ -56,19 +56,14 @@ def remove_html_files():
     # To check and remove the report html files generated previously before running the tool
     path = os.path.join(app.root_path, "reports")
     for file in os.listdir(path):
-        if os.path.isfile(os.path.join(path, file)) and file.find('.html') != -1:
+        if os.path.isfile(os.path.join(path, file)) and (file.find('.html') != -1 or file.find('.csv') != -1):
             os.remove(os.path.join(path, file))
     return
 
 
 if __name__ == "__main__":
-    # print(f'command line arguments are {sys.argv}')
-    if len(sys.argv) == 1:
-        print('Please provide the project id and user name.Refer to Readme.md for help ')
-    elif len(sys.argv) == 2:
-        print('Please provide the user name.Refer to Readme.md for help ')
-    else:
-        app.config['project_id'] = sys.argv[1]
-        app.config['user_name'] = sys.argv[2]
-        app.config['services'] = sys.argv[3]
-        app.run(debug=True)
+    print(f'command line arguments are {sys.argv}')
+    app.config['project_id'] = sys.argv[1]
+    app.config['user_name'] = sys.argv[2]
+    app.config['services'] = sys.argv[3]
+    app.run(debug=True)

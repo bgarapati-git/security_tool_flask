@@ -58,9 +58,11 @@ def run_security_tool(project_id, app_root_path, user_name,services_list):
 
         # Check whether csv is uploaded and delete the csv
         csv_path = os.path.join(app_root_path, 'reports', 'security_status_template.csv')
-        bucket_url = upload_to_gcs(project_id, app_root_path, user_name)
-        if os.path.exists(csv_path) and bucket_url is not None:
-            os.remove(csv_path)
+        path = os.path.join(app_root_path, "reports")
+        if len(count_dict) > 0:
+            bucket_url = upload_to_gcs(project_id, app_root_path, user_name)
+            if os.path.exists(csv_path) and bucket_url is not None:
+                os.remove(csv_path)
         status = "Success"
         status_dict = {"status": status, "report_list": count_dict, "gcs_url": bucket_url}
     except Exception as e:

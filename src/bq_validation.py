@@ -65,7 +65,7 @@ def check_rules_yaml(project_id, dataset_list, filename):
         for dataset in dataset_list:
             failed_list = []
             roles = get_list_roles_users(project_id, dataset)
-            print(f'roles is {roles}')
+            #print(f'roles is {roles}')
             json_ = json.loads(roles)
             dict_list = json_['access']
             status_pass = {service_name: big_query, rule_id: bq_rule_0, entity: dataset,priority: high_priority,

@@ -1,68 +1,32 @@
 rules:
-  -
+  - name: "BigQuery rule to search for public datasets"
     bindings:
       -
         members:
           -
             iamMember: allUsers
-        role: "*"
-    dataset_ids:
-      - "*"
     mode: blacklist
-    name: "BigQuery rule to search for public datasets"
-    resource:
-      -
-        resource_ids:
-          -
-            PROJECT_ID: ~
-        type: organization
-  -
+
+  - name: "BigQuery rule to search for public datasets"
     bindings:
       -
         members:
           - specialGroup: allAuthenticatedUsers
-        role: "*"
-    dataset_ids:
-        - "*"
     mode: blacklist
-    name: "BigQuery rule to search for public datasets"
-    resource:
-      -
-        resource_ids:
-          -
-            PROJECT_ID: ~
-        type: organization
-  -
+  
+  - name: "BigQuery rule to search for datasets accessible by users with gmail.com addresses"
     bindings:
       -
         members:
           -
             userByEmail: "*@gmail.com"
-        role: "*"
-    dataset_ids:
-      - "*"
     mode: blacklist
-    name: "BigQuery rule to search for datasets accessible by users with gmail.com addresses"
-    resource:
-      -
-        resource_ids:
-          -
-            PROJECT_ID: ~
-        type: organization
-  -
+  
+  - name: "BigQuery rule to search for datasets accessible by groups with googlegroups.com addresses"
     bindings:
       -
         members:
           -
             groupByEmail: "*@googlegroups.com"
-        role: "*"
-    dataset_ids:
-      - "*"
     mode: blacklist
-    name: "BigQuery rule to search for datasets accessible by groups with googlegroups.com addresses"
-    resource:
-      -
-        resource_ids:
-          -
-            PROJECT_ID: ~
-        type: organization
+    

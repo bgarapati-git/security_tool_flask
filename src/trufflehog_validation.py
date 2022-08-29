@@ -24,9 +24,10 @@ def get_secrets(urls, app_root_path, file):
         for git_url in urls:
             output=subprocess.getoutput('trufflehog --regex --json --entropy=False ' + git_url + ' > '+app_root_path+'/reports/output.json')
             file_name=app_root_path+'/reports/output.json'
+            git_url1=git_url[:8] + git_url[git_url.find('@')+1:] if git_url.find('@')!=-1 else git_url
             for line1 in open(file_name, 'r'):
                 line=json.loads(line1)
-                dict_list.append({service_name : git_validate, repository : git_url, branch : line['branch'], commit_name : line['commit'], commit_hash :line['commitHash'][:7], path : line['path'], reason : line['reason']})
+                dict_list.append({service_name : git_validate, repository : git_url1, branch : line['branch'], commit_name : line['commit'], commit_hash :line['commitHash'][:7], path : line['path'], reason : line['reason']})
             print(f'dict_list is {dict_list}')
             out_path=os.path.join(app_root_path,'reports','output.json')
             os.remove(out_path)

@@ -169,7 +169,7 @@ def get_list(project_id, command):
 
 def get_status(iam_policy, entities):
     method_name = get_status.__name__
-    print(f'iam_policy is {iam_policy} and entities is {entities}')
+    #print(f'iam_policy is {iam_policy} and entities is {entities}')
     list_ = []
     if len(entities) == 0:
         return

@@ -4,23 +4,8 @@ rules:
   - name: Bucket acls rule to search for public buckets
     rule_id: 'SML-GCS-1'
     priority: 'HIGH'
-    bucket: '*'
     entity: allUsers
-    email: '*'
-    domain: '*'
-    role: '*'
-    resource:
-        - resource_ids:
-          - badri-29apr2022-scrumteam
   - name: Bucket acls rule to search for exposed buckets
     rule_id: 'SML-GCS-1'
     priority: 'HIGH'
-    bucket: '*'
     entity: allAuthenticatedUsers
-    email: '*'
-    domain: '*'
-    role: '*'
-    resource:
-        - resource_ids:
-          - badri-29apr2022-scrumteam
-

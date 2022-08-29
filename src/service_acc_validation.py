@@ -15,7 +15,7 @@ def get_service_acc_list(project_id):
     new = []
     try:
         acc_data = (subprocess.getoutput('gcloud iam service-accounts list --project ' + project_id + ' --format=json'))
-        print(f'service account list is {acc_data}')
+        #print(f'service account list is {acc_data}')
         jsn_ = json.loads(acc_data)
         new = [j['email'] for j in jsn_]
     except Exception as e:

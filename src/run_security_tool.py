@@ -6,7 +6,7 @@ import time
 
 from constants import gcs, big_query, cloud_sql, gcr, gcf, app_engine, api_security, service_accounts, bq_pii, \
     git_validate, cloud_storage, big_query_service, big_query_pii, sql, sa, cloud_run, cloud_functions, \
-    app_engine_service, api_security_check
+    app_engine_service, api_security_check,git_validation, all_services
 from src.api_security_validation import get_urls, check_api
 from src.app_engine_validation import get_app_urls, check_app_engine
 from src.bq_PII_validation import get_yaml, bq_PII_data_validation
@@ -25,34 +25,34 @@ def run_security_tool(project_id, app_root_path, user_name,services_list):
     method_name = run_security_tool.__name__
     count_dict = []
     try:
-        if cloud_storage in services_list:
+        if cloud_storage in services_list or all_services in services_list:
             count_gcs = validate_gcs_buckets(project_id, app_root_path)
             count_dict.append(count_gcs)
-        if big_query_service in services_list:
+        if big_query_service in services_list or all_services in services_list:
             count_bq = validate_bq(project_id, app_root_path)
             count_dict.append(count_bq)
-        if big_query_pii in services_list:
+        if big_query_pii in services_list or all_services in services_list:
             count_bq_pii = validate_bq_PII(project_id, app_root_path)
             count_dict.append(count_bq_pii)
-        if sql in services_list:
+        if sql in services_list or all_services in services_list:
             count_sql = validate_cloud_sql(project_id, app_root_path)
             count_dict.append(count_sql)
-        if sa in services_list:
+        if sa in services_list or all_services in services_list:
             count_sa = validate_service_accounts(project_id, app_root_path)
             count_dict.append(count_sa)
-        if cloud_run in services_list:
+        if cloud_run in services_list or all_services in services_list:
             count_gcr = validate_cloud_run(project_id, app_root_path)
             count_dict.append(count_gcr)
-        if cloud_functions in services_list:
+        if cloud_functions in services_list or all_services in services_list:
             count_gcf = validate_cloud_function(project_id, app_root_path)
             count_dict.append(count_gcf)
-        if app_engine_service in services_list:
+        if app_engine_service in services_list or all_services in services_list:
             count_app = validate_app_engine(project_id, app_root_path)
             count_dict.append(count_app)
-        if api_security_check in services_list:
+        if api_security_check in services_list or all_services in services_list:
             count_api = validate_api_security(project_id, app_root_path)
             count_dict.append(count_api)
-        if git_validate in services_list:
+        if git_validation in services_list or all_services in services_list:
             count_git = validate_git(project_id, app_root_path)
             count_dict.append(count_git)
 

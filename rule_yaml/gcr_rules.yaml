@@ -1,29 +1,14 @@
 
-
 rules:
   - location: 'us-central1'
   - name: Cloud Run rule to search for public services
     rule_id: 'SML-GCR-1'
     priority: 'HIGH'
-    survice: '*'
     entity: allUsers
-    email: '*'
-    domain: '*'
-    role: '*'
-    resource:
-        - resource_ids:
-          - badri-29apr2022-scrumteam
 
-  - name: Clour run rule to search for exposed buckets
+  - name: Cloud Run rule to search for exposed buckets
     rule_id: 'SML-GCR-1'
     priority: 'HIGH'
-    survice: '*'
     entity: allAuthenticatedUsers
-    email: '*'
-    domain: '*'
-    role: '*'
-    resource:
-        - resource_ids:
-          - badri-29apr2022-scrumteam
 
 

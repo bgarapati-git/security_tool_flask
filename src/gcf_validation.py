@@ -43,7 +43,7 @@ def check_iam_policy_gcf(func_list, yaml_entities):
         for function in func_list:
             command = 'gcloud functions get-iam-policy --format=json' + ' ' + function
             function_iam_policy = get_iam_policy(function, command)
-            print(f'function iam policy is {function_iam_policy}')
+            #print(f'function iam policy is {function_iam_policy}')
             status = get_function_status(function_iam_policy, yaml_entities)
             status_list.append(
                 {service_name: gcf, rule_id: gcf_rule, entity: function, priority: high_priority,

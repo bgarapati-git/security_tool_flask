@@ -1,28 +1,13 @@
 
-
 rules:
   - name: Cloud Function rule to search for public services
     rule_id: 'SML-GCF-1'
     priority: 'HIGH'
-    function: '*'
     entity: allUsers
-    email: '*'
-    domain: '*'
-    role: '*'
-    resource:
-        - resource_ids:
-          - badri-29apr2022-scrumteam
 
   - name: Clour Function rule to search for exposed buckets
     rule_id: 'SML-GCF-1'
     priority: 'HIGH'
-    function: '*'
     entity: allAuthenticatedUsers
-    email: '*'
-    domain: '*'
-    role: '*'
-    resource:
-        - resource_ids:
-          - badri-29apr2022-scrumteam
 
 

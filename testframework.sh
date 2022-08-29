@@ -16,20 +16,27 @@ echo "Choose the Services to Test:
       [8] App Engine
       [9] API Security
       [10] Git Validation
+      [*] To run all the services
 
-      format: 2,4,6"
+      Example Format: 2,4,6
+      "
 read Services
 #echo $Services
 
 if ! hash python3
 then
+echo "Installing Python "
 sudo apt install python3
 else
+printf "Python version is " 
 python3 --version
 fi
 
 #cd security_tool_flask
-python3 -m venv venv1
+printf "\nCreating & Activating Python Virtual Environment\n\n"
+python3 -m venv env
 source venv1/bin/activate
+printf "Installing Dependencies\n\n"
+
 pip install -r requirements.txt
 python3 app.py $projectID $Username $Services

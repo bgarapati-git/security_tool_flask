@@ -49,7 +49,7 @@ def get_yaml_data_sql(project_id,file_name):
             data = yaml.load(f, Loader=SafeLoader)
             print(f'yaml data is {data} ')
             ip = next(key['public_ip'] for key in data["rules"])
-            print(f'ip value to compare is {ip} type is {type(ip)}')
+            print(f'ip value to compare is {ip}')
     except Exception as e:
         print(f'Exception occurred in {method_name} method exception is{e}')
     return ip

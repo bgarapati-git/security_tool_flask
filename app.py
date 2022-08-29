@@ -17,7 +17,7 @@ def render_html():
     remove_html_files()
     report_list = get_files_list()
     if len(report_list) > 0:
-        col_names = ["SERVICE", "PASS COUNT", "FAIL COUNT", "GCS REPORT LOCATION", "VIEW"]
+        col_names = ["SERVICE", "PASS COUNT", "FAIL COUNT", "VIEW"]
         keys = ["service", "pass_count", "fail_count"]
         context = {
             "table_title": "Security Assessment Tool",
@@ -32,15 +32,11 @@ def render_html():
 
 
 def get_files_list():
-    data = []
     project_id = app.config['project_id']
     user_name = app.config['user_name']
     services_list = app.config['services'].split(',')
     print(f'project_id is {project_id}')
     status_dict = run_security_tool(project_id, app.root_path, user_name, services_list)
-    # if status_dict['status'] == "Success":
-    #     data = status_dict['report_list']
-    # return data
     return status_dict
 
 
@@ -62,7 +58,7 @@ def remove_html_files():
 
 
 if __name__ == "__main__":
-    print(f'command line arguments are {sys.argv}')
+    #print(f'command line arguments are {sys.argv}')
     app.config['project_id'] = sys.argv[1]
     app.config['user_name'] = sys.argv[2]
     app.config['services'] = sys.argv[3]

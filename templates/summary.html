@@ -41,7 +41,6 @@
                             {% for key in keys %}
                             <td align="center" >{{ record[key] }}</td>
                             {% endfor %}
-                            <td align="center">{{gcs_url}}</td>
                             <td align="center">
                                 <button onclick="openReport('{{ record['filename'] }}')" id="b4"> View </button>
                             </td>
@@ -49,6 +48,10 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div></div>
+                <div>
+                    Reports can be found at : {{gcs_url}}
+                </div>
             </div>
         </div>
     </div>

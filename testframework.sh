@@ -34,8 +34,8 @@ fi
 
 #cd security_tool_flask
 printf "\nCreating & Activating Python Virtual Environment\n\n"
-python3 -m venv env
-source venv1/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 printf "Installing Dependencies\n\n"
 
 pip install -r requirements.txt

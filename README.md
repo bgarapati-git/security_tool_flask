@@ -22,7 +22,7 @@ for corresponding cloud services are as below
 * [8] App Engine
 * [9] API Security
 * [10] Git Validation
-* [*] Run all services
+* [all] Run all services
 
 For example if you want to run the tool only for cloud Storage and Big Query , Need to provide 1,2 when prompted
 

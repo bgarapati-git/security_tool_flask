@@ -16,7 +16,7 @@ echo "Choose the Services to Test:
       [8] App Engine
       [9] API Security
       [10] Git Validation
-      [*] To run all the services
+      'all' To run all the services
 
       Example Format: 2,4,6
       "

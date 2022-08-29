@@ -1,16 +1,13 @@
 ---
 bindings:
-- name: To check if Service account has any roles given below
 - role: roles/editor
 - role: roles/owner
 - role: roles/viewer
 
 rule-2:
-- name: To check whether the project is using a Default Service Accounts
 - email: "*-compute@developer.gserviceaccount.com"
 - email: "*@appspot.gserviceaccount.com"
 
 rule-3:
-- name: To check whether USER_MANAGED keys are being used in any service accounts
 - keyOrigin: GOOGLE_PROVIDED
   keyType: USER_MANAGED

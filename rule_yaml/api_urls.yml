@@ -1,3 +1,10 @@
+#Checks whether all the given API's in this file which are exposed to web & outside are secured
+
+#add urls of the APIs to be tested in the url field
+#add payloads of the url, if any in the payload field
+#add the methods for the url in the method field
+#add the header for the url in the header field
+
 endpoints: 
   app1: 
     url: 
@@ -5,10 +12,7 @@ endpoints:
     payload:
       -
     header:
-      Authorization: 
-               - 'Bearer 111111111111111111111'
-      Content-Type: 
-               - 'application/json'
+      -
     method:
       - "POST"
   app2: 
@@ -17,9 +21,6 @@ endpoints:
     payload:
       -
     header:
-      Authorization: 
-               - 'Bearer 111111111111111111111'
-      Content-Type: 
-               - 'application/json'
+      -
     method:
      - "GET"

@@ -1,3 +1,10 @@
+#This rule checks the presence of exposed PII(Personal Identifiable Information) data in the tables in BigQuery
+
+#Enter the BigQuery Table to be tested in the Dataset_and_Table field in the given format
+#For the given BIgQuery Table add the coloumn names to be tested in the entity field
+#For the given coloumn type enter the valid regex in the regex field below its entity
+
+#use the same stardard regexes provided in this file for your data.(This file contains most of the frequently used PII data regexes)
 
 rules:
   - name: BigQuery rule for PII data

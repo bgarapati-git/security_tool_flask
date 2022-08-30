@@ -1,3 +1,11 @@
+
+# Provide Git Repository URLs in the git_url variable, 
+# If more repositories are needed to be validated add "git_url: url" below. 
+
+# To validate private repositories please provide username and personal access token (PAT) 
+# in the below format.
+# git_url: https://username@PersonalAccessToken@github.com/username/repo_name.git.
+
 rules:
   - git_url: https://rijusharmap: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@github.com/riju11sharma/sample.git
   - git_url: https://github.com/riju11sharma/NewRepo.git

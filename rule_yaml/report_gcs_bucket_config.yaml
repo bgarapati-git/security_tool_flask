@@ -1,2 +1,5 @@
+
+# Please provide the GCS bucket url to save the reports.
+
 gcs:
   - gcs_report_url: gs://security_tool_reports/

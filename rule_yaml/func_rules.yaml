@@ -1,13 +1,15 @@
 
+# This YAML file rules are to validate Google Cloud Function 
+# Checks whether Cloud function service are having public access 
+# i.e allUsers and allAuthenticatedUsers should not have access
+
+# Do not edit the YAML file.
+
 rules:
   - name: Cloud Function rule to search for public services
-    rule_id: 'SML-GCF-1'
-    priority: 'HIGH'
     entity: allUsers
 
-  - name: Clour Function rule to search for exposed buckets
-    rule_id: 'SML-GCF-1'
-    priority: 'HIGH'
+  - name: Cloud Function rule to search for exposed services
     entity: allAuthenticatedUsers
 
 

@@ -1,11 +1,12 @@
 
+# This YAML file rules are to validate Google Cloud Storage
+# Checks whether Buckets in Cloud storage service are properly secured without any public access
+# i.e allUsers and allAuthenticatedUsers should not have access.
+
+# Do not edit the YAML file.
 
 rules:
   - name: Bucket acls rule to search for public buckets
-    rule_id: 'SML-GCS-1'
-    priority: 'HIGH'
     entity: allUsers
   - name: Bucket acls rule to search for exposed buckets
-    rule_id: 'SML-GCS-1'
-    priority: 'HIGH'
     entity: allAuthenticatedUsers

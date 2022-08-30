@@ -1,5 +1,10 @@
+
+# This YAML file contains rules to validate Google Cloud SQL instances.
+# Rule to ensure CloudSQL is not publicly available i.e, with public_ip: 0.0.0.0/0
+# public_ip value is extracted from the yaml and validated with the project sql instances
+
+# Do not edit the YAML file.
+
 rules:
   - name: To check public ip in cloud sql
-    rule_id: 'SML_SQL_01'
-    priority: 'HIGH'
     public_ip: '0.0.0.0/0'

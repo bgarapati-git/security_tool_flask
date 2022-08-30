@@ -1,3 +1,10 @@
+
+# This YAML file contains rules used for validating Bigquery Datasets
+# Ensure that BigQuery datasets are not publicly accessible i.e, allUsers, allAuthenticatedUsers cannot access the dataset.
+# Ensure that users with @gmail.com addresses and @googlegroup.com addresses cannot access the datasets
+
+# Do not edit the YAML file.
+
 rules:
   - name: "BigQuery rule to search for public datasets"
     bindings:
@@ -5,14 +12,12 @@ rules:
         members:
           -
             iamMember: allUsers
-    mode: blacklist
 
   - name: "BigQuery rule to search for public datasets"
     bindings:
       -
         members:
           - specialGroup: allAuthenticatedUsers
-    mode: blacklist
   
   - name: "BigQuery rule to search for datasets accessible by users with gmail.com addresses"
     bindings:
@@ -20,7 +25,6 @@ rules:
         members:
           -
             userByEmail: "*@gmail.com"
-    mode: blacklist
   
   - name: "BigQuery rule to search for datasets accessible by groups with googlegroups.com addresses"
     bindings:
@@ -28,5 +32,4 @@ rules:
         members:
           -
             groupByEmail: "*@googlegroups.com"
-    mode: blacklist
     

@@ -30,7 +30,7 @@ def get_yaml_details(project_id, filename):
         # filename = '../rule_yaml/' + project_id + '_service_' + 'rules.yaml'
         with open(filename) as f:
             data = yaml.load(f, Loader=SafeLoader)
-            yaml_ = [i['role'] for i in data['bindings']]
+            yaml_ = [i['role'] for i in data['rule-1']]
             rule2 = [i['email'].split('*')[-1] for i in data['rule-2']]
             rule3 = [i['keyType'] for i in data['rule-3']]
             yaml_ = yaml_ + rule2 + rule3

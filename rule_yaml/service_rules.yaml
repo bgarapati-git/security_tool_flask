@@ -1,5 +1,12 @@
----
-bindings:
+# This YAML file which provides rules to be validated against the service accounts in the give project.
+
+# Rule-1 : Ensure that user does not have admin privilages i.e., standard roles like owner/editor/viewer.
+# Rule-2 : Ensure Default Service Account is not used at project level.
+# Rule-3 : Ensure no service accounts exist with USER_MANAGED keys.
+
+# Do not edit the yaml file.
+
+rule-1:
 - role: roles/editor
 - role: roles/owner
 - role: roles/viewer
@@ -9,5 +16,4 @@ rule-2:
 - email: "*@appspot.gserviceaccount.com"
 
 rule-3:
-- keyOrigin: GOOGLE_PROVIDED
-  keyType: USER_MANAGED
+- keyType: USER_MANAGED

@@ -1,14 +1,18 @@
 
+# This YAML file rules are to validate Google Cloud Run 
+
+# Checks whether Cloud Run Services are having public access 
+# i.e allUsers and allAuthenticatedUsers should not have access
+
+# Please provide the location.
+# Do not edit the other fields of the YAML file.
+
 rules:
   - location: 'us-central1'
   - name: Cloud Run rule to search for public services
-    rule_id: 'SML-GCR-1'
-    priority: 'HIGH'
     entity: allUsers
 
-  - name: Cloud Run rule to search for exposed buckets
-    rule_id: 'SML-GCR-1'
-    priority: 'HIGH'
+  - name: Cloud Run rule to search for exposed services
     entity: allAuthenticatedUsers
 
 
